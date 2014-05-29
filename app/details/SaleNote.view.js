@@ -28,11 +28,16 @@ sap.ui.jsview("app.details.SaleNote", {
 	 * @memberOf app.detail.SaleNote
 	 */
 	createContent : function(oController) {
+		
+		
+		var labelPetitioner = new sap.m.Label({
+			text: oBundle.getText("SALENOTE_PETITIONER"),		
+		});
 
 		var petitioner = new sap.m.Input({
 			id:"productInput",
 			type:"Text",
-			placeholder:"Enter Product ..."
+			placeholder: ""
 		});
 		
 		/*
@@ -51,7 +56,7 @@ sap.ui.jsview("app.details.SaleNote", {
 		*/
 		return new sap.m.Page({
 			title : oBundle.getText("TITLE__SALE_NOTE"),
-			content : [ petitioner ]
+			content : [ labelPetitioner, petitioner ]
 		});
 	}
 
