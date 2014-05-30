@@ -21,6 +21,28 @@ sap.ui.jsview("app.master.Menu", {
 	createContent : function(oController) {
 
 		oModel = new sap.ui.model.json.JSONModel("model/mockSalesNotes.json");
+		
+
+		var iconTabBar = new sap.m.IconTabBar({
+			expanded : jQuery.device.is.desktop,
+			select : function(oEvent) {
+				oController.handleTabSelect(oEvent);
+			},
+			items : [ new sap.m.IconTabFilter({
+				key : "Status1",
+				icon : "sap-icon://flag",
+				iconColor: sap.ui.core.IconColor.Positive
+			}), new sap.m.IconTabFilter({
+				key : "Status2",
+				icon : "sap-icon://flag",
+				iconColor: sap.ui.core.IconColor.Default 
+			}), new sap.m.IconTabFilter({
+				key : "Status3",
+				icon : "sap-icon://flag",
+				iconColor: sap.ui.core.IconColor.Negative
+			}) ]
+		});
+		
 
 		this.oList = new sap.m.List({
 			id : "list",
@@ -60,7 +82,7 @@ sap.ui.jsview("app.master.Menu", {
 		// Create new button
 		var newButton = new sap.m.Button({
 			icon : "sap-icon://add",
-			tap : oController.newSaleNoteTap
+			tap : oController.newSaleNoteTap			
 		});
 
 		var exitButton = new sap.m.Button({
@@ -71,8 +93,8 @@ sap.ui.jsview("app.master.Menu", {
 
 		return new sap.m.Page({
 			title : oBundle.getText("TITLE__MENU"),
-			content : [ new sap.m.Bar({
-				enableFlexBox : false,
+			content : [ iconTabBar, new sap.m.Bar({
+				enableFlexBox : true,
 				contentMiddle : [ this.searchField ]
 
 			}), this.oList ],
