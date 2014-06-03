@@ -49,7 +49,9 @@ sap.ui.controller("app.master.NewSaleNote", {
 	},
 	
 	onItemsTap : function() {
-		alert("add items...");
+		// open value help dialog
+		oView = sap.ui.getCore().byId("app.master.NewSaleNote");
+		oView.productsHelpDialog.open();
 	},
 	
 	handlePetitionerValueHelp : function(evt) {
@@ -74,6 +76,42 @@ sap.ui.controller("app.master.NewSaleNote", {
 			oView.petitioner.setValue(oSelectedItem.getTitle());
 		}
 		evt.getSource().getBinding("items").filter([]);
+	},
+	
+	handleProductsValueHelpSearch : function (evt) {
+		var sValue = evt.getParameter("value");
+		var oFilter = new sap.ui.model.Filter(
+			"ProductName",
+			sap.ui.model.FilterOperator.Contains, sValue
+		);
+		evt.getSource().getBinding("items").filter([oFilter]);
+	},
+
+	handleProductsValueHelpClose : function (evt) {
+		var oSelectedItem = evt.getParameter("selectedItem");
+		if (oSelectedItem) {
+			oView = sap.ui.getCore().byId("app.master.NewSaleNote");
+			//FIXME - Add row
+			alert(oSelectedItem.getTitle());
+			oView.petitioner.setValue(oSelectedItem.getTitle());
+		}
+		evt.getSource().getBinding("items").filter([]);
+	},
+	
+	handleDeleteProduct : function (evt) {
+		evt.getSource().removeItem(evt.getParameter("listItem"));
+	},
+	
+	onDeleteItemsTap : function (evt) {
+		alert("delete item");
 	}
+	
+	//refresh responsive
+	/*handlePushNewProduct: function () {
+		var oView = this.getView();
+		var oData = oView.getModel().getData();
+		oData.ProductCollection.push(aColl[this._productCount++]);
+		oView.getModel().setData(oData);
+	},*/
 
 });

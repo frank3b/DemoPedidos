@@ -30,7 +30,25 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	createContent : function(oController) {
 		
 		//oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
+		
+		//Products Search Help
+		this.productsHelpDialog = new sap.m.SelectDialog({
+			title : "Productos",
+			class : "sapUiPopupWithPadding",
+			search : oController.handleProductsValueHelpSearch,
+			confirm : oController.handleProductsValueHelpClose,
+			cancel : oController.handleProductsValueHelpClose
+		});
+		this.productsHelpDialog.setModel(new sap.ui.model.json.JSONModel("model/mockProducts.json"));
+		
+		var olistProductsTemplate = new sap.m.StandardListItem({
+			title : "{ProductName}",
+			type : sap.m.ListType.Active,
+			description : "{Price} {CurrencyCode}"
+		});	
+		this.productsHelpDialog.bindAggregation("items", "/", olistProductsTemplate);
 
+		//Petitioner Search Help
 		this.petitioner = new sap.m.Input({
 			id : "petitionerInput",
 			type : "Text",
@@ -40,7 +58,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			valueHelpRequest : oController.handlePetitionerValueHelp
 		});
 		
-		this.petitionerHelpDialog = sap.m.SelectDialog({
+		this.petitionerHelpDialog = new sap.m.SelectDialog({
 			title : "Solicitantes",
 			class : "sapUiPopupWithPadding",
 			search : oController.handlePetitionerValueHelpSearch,
@@ -117,13 +135,20 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			icon : "sap-icon://cart-full",
 			tap : oController.onItemsTap			
 		});
+		// Create new button
+		var deleteButton = new sap.m.Button({
+			icon : "sap-icon://delete",
+			tap : oController.onDeleteItemsTap			
+		});
 		
 		//Products Table
 		var oTableItems = new sap.m.Table("itemsDataTable", {
+			mode : "MultiSelect",
+			includeItemInSelection : true,
 	        headerToolbar : new sap.m.Toolbar({
 	            content : [ new sap.m.Label({
 	                text : "Productos"
-	            }), new sap.m.ToolbarSpacer({}), itemsButton 
+	            }), new sap.m.ToolbarSpacer({}), deleteButton, itemsButton  
 	            ]
 	        }),
 	        columns : [ new sap.m.Column({
@@ -132,7 +157,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	                text : "{i18n>SALENOTE_COLUMN_HEADER_PNAME}"
 	            })
 	        }), new sap.m.Column({
-	            width : "2em",
+	            width : "1em",
 	            header : new sap.m.Label({
 	                text : "{i18n>SALENOTE_COLUMN_HEADER_PRICE}"
 	            })
