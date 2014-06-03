@@ -35,20 +35,14 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			id : "petitionerInput",
 			type : "Text",
 			placeholder : "Seleccione el solicitante",
-			//showSuggestion : true,
+			showSuggestion : true,
 			showValueHelp : true,
-			valueHelpRequest : oController.handlePetitionerValueHelp/*,
-			suggestionItems : "{/PetitionerCollection}",	
-			suggestionItems : [ new sap.ui.core.Item({
-				text: "{FirstName}"
-				})
-			]	*/
+			valueHelpRequest : oController.handlePetitionerValueHelp
 		});
 		
 		this.petitionerHelpDialog = sap.m.SelectDialog({
 			title : "Solicitantes",
 			class : "sapUiPopupWithPadding",
-			//items : "{/PetitionerCollection}",
 			search : oController.handlePetitionerValueHelpSearch,
 			confirm : oController.handlePetitionerValueHelpClose,
 			cancel : oController.handlePetitionerValueHelpClose
@@ -68,8 +62,8 @@ sap.ui.jsview("app.master.NewSaleNote", {
 
 		var oForm1 = new sap.ui.layout.form.Form("F1", {
 			//title : new sap.ui.core.Title({
-			//	text : "Datos Generales",
-			//	tooltip : "Title tooltip"
+			//	text : "Datos - Nota de Venta",
+			//	tooltip : "Ingrese los siguientes datos..."
 			//}),
 			layout : oLayout3,
 			formContainers : [ new sap.ui.layout.form.FormContainer("F1C1", {

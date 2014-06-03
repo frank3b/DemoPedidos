@@ -22,6 +22,31 @@ sap.ui.jsview("app.master.Login", {
 			  ]
 		});
 		
+		var oLayout3 = new sap.ui.layout.form.ResponsiveGridLayout();
+
+		var formLogin = new sap.ui.layout.form.Form("FLogin", {
+			//title : new sap.ui.core.Title({
+			//	text : "Datos - Nota de Venta",
+			//	tooltip : "Ingrese los siguientes datos..."
+			//}),
+			layout : oLayout3,
+			formContainers : [ new sap.ui.layout.form.FormContainer("FL1C1", {
+				//title : "Person data",
+				formElements : [ 
+				    new sap.ui.layout.form.FormElement({
+						label : "{i18n>USER_NAME}",
+						fields : [ new sap.m.Input( { value : "{/UserName}" } )	]
+					}),
+					new sap.ui.layout.form.FormElement({
+						label : "{i18n>PASSWORD}",
+						fields : [ new sap.m.Input( { value : "{/Password}", type : sap.m.InputType.Password } ) ]
+					})
+				]
+			})
+
+			]
+		});
+		
 		// create page
 		this.page = new sap.m.Page({
 			title : "{i18n>TITLE__AUTH}",
@@ -48,7 +73,10 @@ sap.ui.jsview("app.master.Login", {
 			 * {model}.UserName
 			 * {model}.Password
 			 */
-			content: [ ologoBox, 
+			content: [  
+			           formLogin 
+					] 
+			/*content: [ ologoBox, 
 		  		new sap.m.List({
 					items : [ 
 						new sap.m.InputListItem({
@@ -61,7 +89,7 @@ sap.ui.jsview("app.master.Login", {
 						})
 					],
 				})
-			] 
+			] */
 		});
 		
 		return this.page;
