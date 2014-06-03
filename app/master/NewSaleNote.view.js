@@ -53,7 +53,6 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			id : "petitionerInput",
 			type : "Text",
 			placeholder : "Seleccione el solicitante",
-			showSuggestion : true,
 			showValueHelp : true,
 			valueHelpRequest : oController.handlePetitionerValueHelp
 		});
@@ -132,7 +131,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		
 		// Create new button
 		var itemsButton = new sap.m.Button({
-			icon : "sap-icon://cart-full",
+			icon : "sap-icon://add",
 			tap : oController.onItemsTap			
 		});
 		// Create new button
@@ -182,13 +181,30 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	        ]
 	    }));
 
-		//oTableItems.setModel(oModel);
+		//Icon Tabs
+		var iconTabsBar = new sap.m.IconTabBar({
+			expanded : true,
+			expandable : false,
+			class: "iconTabBarPaddingTop",
+			items : [ new sap.m.IconTabFilter({
+				icon: "sap-icon://hint",
+				iconColor: "Default",
+				key : "detail",
+				content : [ oForm1 ]	
+			}), new sap.m.IconTabFilter({
+				icon: "sap-icon://cart-full",
+				iconColor: "Default",
+				key : "cart",
+				content : [ oTableItems ]	
+			})
+			]
+		});
 
 		return new sap.m.Page({
 			title : "{i18n>TITLE__SALE_NOTE}",
 			showNavButton : true,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
-			content : [ oForm1, oTableItems ],
+			content : [ iconTabsBar ],
 			//headerContent : [  ]
 		});
 	}

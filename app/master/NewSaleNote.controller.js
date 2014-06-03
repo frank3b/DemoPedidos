@@ -92,8 +92,21 @@ sap.ui.controller("app.master.NewSaleNote", {
 		if (oSelectedItem) {
 			oView = sap.ui.getCore().byId("app.master.NewSaleNote");
 			//FIXME - Add row
-			alert(oSelectedItem.getTitle());
-			oView.petitioner.setValue(oSelectedItem.getTitle());
+			//alert(oSelectedItem.getTitle());
+			//oView.petitioner.setValue(oSelectedItem.getTitle());
+			
+			var newProduct = {"Code" : "1",
+				"ProductName": oSelectedItem.getTitle(),
+				"Price": oSelectedItem.Price,
+				"Weight": oSelectedItem.Weight,
+				"Amount": 1,
+				"CurrencyCode": "COP",
+				"Thumbnail" : "http://sapes1.sapdevcenter.com:8080/SAP/PUBLIC/BC/NWDEMO_MODEL/IMAGES/HT-1001.jpg"
+			};
+			
+			var oData = oView.getModel().getData();
+			oData.Products.push(newProduct);
+			oView.getModel().setData(oData);
 		}
 		evt.getSource().getBinding("items").filter([]);
 	},

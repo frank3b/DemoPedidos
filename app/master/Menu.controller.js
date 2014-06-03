@@ -8,9 +8,15 @@ sap.ui.controller("app.master.Menu", {
 	 * 
 	 * @memberOf app.master.Menu
 	 */
-	// onInit: function() {
-	//
-	// },
+	 onInit: function() {
+			var oView = this.getView();
+			var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Inicial");
+			
+			// update list binding
+			var list = oView.oList;
+			var binding = list.getBinding("items");
+			binding.filter([oFilter]);
+	 },
 	/**
 	 * Similar to onAfterRendering, but this hook is invoked before the
 	 * controller's View is re-rendered (NOT before the first rendering!
@@ -40,8 +46,29 @@ sap.ui.controller("app.master.Menu", {
 	// onExit: function() {
 	//
 	// }
+	
+	//FIXME - update with the real status
 	handleTabSelect : function(oEvent) {
-		alert('handleTabSelect...');
+		
+		var sKey = oEvent.getParameter("selectedKey");
+		var oFilter = null;
+		
+		if (sKey === "Status1") {
+			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Inicial");
+		} else if (sKey === "Status2") {
+			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Pendiente");
+		} else if (sKey === "Status3") {
+			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Terminado");
+		}
+		
+		if(oFilter){
+			// update list binding
+			var oView = this.getView();
+			var list = oView.oList;
+			var binding = list.getBinding("items");
+			binding.filter([oFilter]);
+		}
+		
 	},
 	//Open Menu
 	onMenuTap : function(oEvent) {

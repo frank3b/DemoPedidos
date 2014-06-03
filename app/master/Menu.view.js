@@ -60,34 +60,9 @@ sap.ui.jsview("app.master.Menu", {
 			]
 		});
 
-		//Status Icons
-		var iconTabBar = new sap.m.IconTabBar({
-			expanded : false,
-			select : function(oEvent) {
-				oController.handleTabSelect(oEvent);
-			},
-			items : [ new sap.m.IconTabFilter({
-				key : "Status1",
-				icon: "sap-icon://flag",
-				iconColor: "Positive"
-			}), new sap.m.IconTabFilter({
-				key : "Status2",
-				icon : "sap-icon://flag",
-				iconColor: sap.ui.core.IconColor.Default 
-			}), new sap.m.IconTabFilter({
-				key : "Status3",
-				icon : "sap-icon://flag",
-				iconColor: sap.ui.core.IconColor.Negative
-			}) ]
-		});
-		
-
+		//Sales notes list
 		this.oList = new sap.m.List({
 			id : "list"
-			//showUnread : true,
-			//mode : jQuery.device.is.phone ? sap.m.ListMode.None
-			//		: sap.m.ListMode.SingleSelectMaster,
-			//select : [ oController.onListSelect, oController ]
 		});
 		this.oList.setModel(oModel);
 
@@ -103,7 +78,7 @@ sap.ui.jsview("app.master.Menu", {
 				text : "{Petitioner/FirstName}"
 			}) ],
 			firstStatus : new sap.m.ObjectStatus({
-				text : "Initial"
+				text : "{Status}"
 			})
 		});
 		this.oList.bindItems("/", this.items);
@@ -133,27 +108,54 @@ sap.ui.jsview("app.master.Menu", {
 			items : [ new sap.ui.core.Item({
 				key:  "All",
 				text: "{i18n>masterFilterAll}"
-			}), new sap.ui.core.Item({
+			})/*, new sap.ui.core.Item({
 				key: "5k",
 				text: "{i18n>masterFilter5k}"
 			}), new sap.ui.core.Item({
 				key: "10k",
 				text: "{i18n>masterFilter10k}"
+			})*/ ]
+		});
+		
+		var searchBar =  new sap.m.Bar({
+			enableFlexBox : true,
+			contentMiddle : [ this.searchField ]
+		});
+		
+		//Status Icons Tabs
+		var iconTabBar = new sap.m.IconTabBar({
+			expanded : true,
+			expandable : false,
+			content : [ searchBar, this.oList ],
+			select : function(oEvent) {
+				oController.handleTabSelect(oEvent);
+			},
+			items : [ new sap.m.IconTabFilter({
+				key : "Status1",
+				design: "Horizontal",
+				icon: "sap-icon://flag",
+				iconColor: "Positive"
+			}), new sap.m.IconTabFilter({
+				key : "Status2",
+				design: "Horizontal",
+				icon : "sap-icon://flag",
+				iconColor: sap.ui.core.IconColor.Default
+			}), new sap.m.IconTabFilter({
+				key : "Status3",
+				design: "Horizontal",
+				icon : "sap-icon://flag",
+				iconColor: sap.ui.core.IconColor.Negative
 			}) ]
 		});
-
+		
 		return new sap.m.Page({
 			title : "{i18n>TITLE__MENU}",
-			content : [ iconTabBar, new sap.m.Bar({
-				enableFlexBox : true,
-				contentMiddle : [ this.searchField ]
-
-			}), this.oList ],
+			content : [ iconTabBar ],
 			headerContent : [ menuButton ],
-			footer : new sap.m.Bar({
+			/*footer : new sap.m.Bar({
 				contentRight : [ this.filterSelect ]
-			}),
-
+			})
+			*/
 		});
 	}
 
