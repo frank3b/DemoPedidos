@@ -96,7 +96,9 @@ sap.ui.jsview("app.master.Menu", {
 		// Create new button
 		var menuButton = new sap.m.Button({
 			icon : "sap-icon://menu2",
-			tap : oController.onMenuTap			
+			tap : function(oEvent) {
+				oController.onMenuTap(oEvent);		
+			}
 		});
 		
 		this.filterSelect = new sap.m.Select({

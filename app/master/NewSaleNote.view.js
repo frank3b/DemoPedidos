@@ -33,11 +33,17 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		
 		//Products Search Help
 		this.productsHelpDialog = new sap.m.SelectDialog({
-			title : "Productos",
+			title : "{i18n>PRODUCTS_LIST_TITLE}",
 			class : "sapUiPopupWithPadding",
-			search : oController.handleProductsValueHelpSearch,
-			confirm : oController.handleProductsValueHelpClose,
-			cancel : oController.handleProductsValueHelpClose
+			search : function(oEvent) {
+				oController.handleProductsValueHelpSearch(oEvent);
+			},
+			confirm : function(oEvent) {
+				oController.handleProductsValueHelpClose(oEvent);
+			},
+			cancel : function(oEvent) {
+				oController.handleProductsValueHelpClose(oEvent);
+			},
 		});
 		this.productsHelpDialog.setModel(new sap.ui.model.json.JSONModel("model/mockProducts.json"));
 		
@@ -52,17 +58,25 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		this.petitioner = new sap.m.Input({
 			id : "petitionerInput",
 			type : "Text",
-			placeholder : "Seleccione el solicitante",
+			placeholder : "{i18n>PETITIONER_PLACEHOLDER}",
 			showValueHelp : true,
-			valueHelpRequest : oController.handlePetitionerValueHelp
+			valueHelpRequest : function(oEvent) {
+				oController.handlePetitionerValueHelp(oEvent);
+			}
 		});
 		
 		this.petitionerHelpDialog = new sap.m.SelectDialog({
-			title : "Solicitantes",
+			title : "{i18n>PETITIONER_LIST_TITLE}",
 			class : "sapUiPopupWithPadding",
-			search : oController.handlePetitionerValueHelpSearch,
-			confirm : oController.handlePetitionerValueHelpClose,
-			cancel : oController.handlePetitionerValueHelpClose
+			search : function(oEvent) {
+				oController.handlePetitionerValueHelpSearch(oEvent);
+			},
+			confirm : function(oEvent) {
+				oController.handlePetitionerValueHelpClose(oEvent);
+			},
+			cancel : function(oEvent) {
+				oController.handlePetitionerValueHelpClose(oEvent);
+			}
 		});
 		this.petitionerHelpDialog.setModel(new sap.ui.model.json.JSONModel("model/mockPetitioners.json"));
 		
@@ -132,7 +146,9 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		// Create new button
 		var itemsButton = new sap.m.Button({
 			icon : "sap-icon://add",
-			tap : oController.onItemsTap			
+			tap : function(oEvent) {
+				oController.onItemsTap(oEvent);			
+			}
 		});
 		// Create new button
 		var deleteButton = new sap.m.Button({

@@ -48,15 +48,17 @@ sap.ui.controller("app.master.NewSaleNote", {
 		sap.ui.getCore().getEventBus().publish("nav", "back");
 	},
 	
-	onItemsTap : function() {
+	onItemsTap : function(evt) {
 		// open value help dialog
-		oView = sap.ui.getCore().byId("app.master.NewSaleNote");
+		var oView = this.getView();
+		
 		oView.productsHelpDialog.open();
 	},
 	
 	handlePetitionerValueHelp : function(evt) {
 		// open value help dialog
-		oView = sap.ui.getCore().byId("app.master.NewSaleNote");
+		var oView = this.getView();
+		
 		oView.petitionerHelpDialog.open();
 	},
 	
@@ -72,7 +74,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 	handlePetitionerValueHelpClose : function (evt) {
 		var oSelectedItem = evt.getParameter("selectedItem");
 		if (oSelectedItem) {
-			oView = sap.ui.getCore().byId("app.master.NewSaleNote");
+			var oView = this.getView();
 			oView.petitioner.setValue(oSelectedItem.getTitle());
 		}
 		evt.getSource().getBinding("items").filter([]);
@@ -90,10 +92,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 	handleProductsValueHelpClose : function (evt) {
 		var oSelectedItem = evt.getParameter("selectedItem");
 		if (oSelectedItem) {
-			oView = sap.ui.getCore().byId("app.master.NewSaleNote");
-			//FIXME - Add row
-			//alert(oSelectedItem.getTitle());
-			//oView.petitioner.setValue(oSelectedItem.getTitle());
+			var oView = this.getView();
 			
 			var newProduct = {"Code" : "1",
 				"ProductName": oSelectedItem.getTitle(),
@@ -119,12 +118,4 @@ sap.ui.controller("app.master.NewSaleNote", {
 		alert("delete item");
 	}
 	
-	//refresh responsive
-	/*handlePushNewProduct: function () {
-		var oView = this.getView();
-		var oData = oView.getModel().getData();
-		oData.ProductCollection.push(aColl[this._productCount++]);
-		oView.getModel().setData(oData);
-	},*/
-
 });

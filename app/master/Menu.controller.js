@@ -73,8 +73,7 @@ sap.ui.controller("app.master.Menu", {
 	//Open Menu
 	onMenuTap : function(oEvent) {
 		var oButton = oEvent.getSource();
-
-		oView = sap.ui.getCore().byId("app.master.Menu");
+		var oView = this.getView();
 		oView._actionSheet.openBy(oButton);
 	},
 	
