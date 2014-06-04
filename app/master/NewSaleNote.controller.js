@@ -9,7 +9,6 @@ sap.ui.controller("app.master.NewSaleNote", {
 		var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
 		this.getView().setModel(oModel);
 		
-		
 		//var oModelPetitioner = new sap.ui.model.json.JSONModel("model/mockPetitioners.json");
 		//sap.ui.getCore().setModel(oModelPetitioner, "PetitionerCollection");
 	},
@@ -40,8 +39,9 @@ sap.ui.controller("app.master.NewSaleNote", {
 //
 //	}
 	
-	onBeforeShow : function(oData) {
+	onBeforeShow : function(oEvent) {
 		//this.getView().bindElement(oData.data.bindingContext.getPath());
+		
 	},
 	
 	onNavButtonTap : function() {
@@ -52,6 +52,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 		// open value help dialog
 		var oView = this.getView();
 		
+		//oView.byId("productsHelpDialog").open();
 		oView.productsHelpDialog.open();
 	},
 	
@@ -94,13 +95,16 @@ sap.ui.controller("app.master.NewSaleNote", {
 		if (oSelectedItem) {
 			var oView = this.getView();
 			
-			var newProduct = {"Code" : "1",
-				"ProductName": oSelectedItem.getTitle(),
-				"Price": oSelectedItem.Price,
-				"Weight": oSelectedItem.Weight,
+			var productCode = oSelectedItem.getTitle().split(" ")[0];
+			
+			var product = getProduct( productCode );
+			
+			var newProduct = {"Code" : product.Code,
+				"ProductName": product.ProductName,
+				"Price": product.Price,
+				"Weight": product.Weight,
 				"Amount": 1,
-				"CurrencyCode": "COP",
-				"Thumbnail" : "http://sapes1.sapdevcenter.com:8080/SAP/PUBLIC/BC/NWDEMO_MODEL/IMAGES/HT-1001.jpg"
+				"CurrencyCode": product.CurrencyCode
 			};
 			
 			var oData = oView.getModel().getData();

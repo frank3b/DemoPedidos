@@ -17,7 +17,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 * @param oEvent
 	 */
 	onBeforeShow : function(oEvent) {
-		// this.getController().onBeforeShow(oEvent);
+		this.getController().onBeforeShow(oEvent);
 	},
 
 	/**
@@ -33,6 +33,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		
 		//Products Search Help
 		this.productsHelpDialog = new sap.m.SelectDialog({
+			id : "productsHelpDialog",
 			title : "{i18n>PRODUCTS_LIST_TITLE}",
 			class : "sapUiPopupWithPadding",
 			search : function(oEvent) {
@@ -45,14 +46,14 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				oController.handleProductsValueHelpClose(oEvent);
 			},
 		});
-		this.productsHelpDialog.setModel(new sap.ui.model.json.JSONModel("model/mockProducts.json"));
-		
+		this.productsHelpDialog.setModel( oProductsModel );
 		var olistProductsTemplate = new sap.m.StandardListItem({
-			title : "{ProductName}",
+			title : "{Code} {ProductName}",
 			type : sap.m.ListType.Active,
 			description : "{Price} {CurrencyCode}"
 		});	
 		this.productsHelpDialog.bindAggregation("items", "/", olistProductsTemplate);
+		
 
 		//Petitioner Search Help
 		this.petitioner = new sap.m.Input({

@@ -19,8 +19,6 @@ sap.ui.controller("app.master.Login", {
 		var data = sap.ui.getCore().getModel().getData();
 		var app = this.getView().app;
 		
-		sap.ui.getCore().getEventBus().publish("busyDialog", "open");
-		
 		var onAuthSuccess = function(oData, statusText, responseXHR) {
 			createModel();
 			
@@ -29,8 +27,12 @@ sap.ui.controller("app.master.Login", {
 			sap.ui.getCore().getEventBus().publish("busyDialog", "close");
 		};
 		
+		var oBindingContext = evt.oSource.getBindingContext();
+		sap.ui.getCore().getEventBus().publish("busyDialog", "open");
+		initKinveyLogin(data.UserName, data.Password, oBindingContext);
+		
 		//FIXME - this is only for demo
-		if(data.UserName == 'demo' && data.Password == 'demo'){
+		/*if(data.UserName == 'demo' && data.Password == 'demo'){
 			sap.ui.getCore().getEventBus().publish("busyDialog", "close");
 			
 			var oBindingContext = evt.oSource.getBindingContext();
@@ -48,6 +50,7 @@ sap.ui.controller("app.master.Login", {
 				statusText : "Autenticación"
 			});	
 		}
+		*/
 		
 		//executeFormAuthentication(data.UserName, data.Password, onAuthSuccess);
 		

@@ -64,3 +64,55 @@ function errorHandling(oData, textStatus, error){
 		statusText : oData.statusText
 	});	
 }
+
+function initKinveyLogin(userName, password, oBindingContext){  
+	
+	try {
+	    
+	    if(userName != null && password != null && userName != '' && password != ''){	        
+	        
+	        var promise = Kinvey.User.logout({
+	            success: function() {
+	            	jQuery.sap.log.info("Logoff..." + userName);
+	                loginKiveyUser(userName, password);
+	            },
+	            error: function(e) {
+	            	jQuery.sap.log.error("Error Logoff..." + e.description);
+	            	loginKiveyUser(userName, password);
+	            }
+			});
+	        
+	    } else {
+	       alert("Por favor, ingrese el usuario y password.");
+	    }
+	} catch (e) {
+		jQuery.sap.log.error("Logoff..." + e.message);
+	}
+    
+}
+
+function loginKiveyUser(userName, password, oBindingContext){
+	
+	Kinvey.User.login(userName, password, {
+		
+        success: function() {
+        	jQuery.sap.log.info("Login..." + userName);        	
+        	
+        	var user = Kinvey.getActiveUser();
+        	
+        	var txtwelcome = "Bienvenido: " + user.first_name + " " + user.last_name;
+        	
+        	sap.ui.getCore().getEventBus().publish("nav", "to", {
+		    	viewId : "app.master.Menu",
+		    	data : { bindingContext : oBindingContext }
+			});
+        	
+        	sap.ui.getCore().getEventBus().publish("busyDialog", "close");
+        	
+        },
+        error: function(error){
+        	jQuery.sap.log.error("Error login..." + error.description);
+        	sap.ui.getCore().getEventBus().publish("busyDialog", "close");
+        }	
+	});
+}

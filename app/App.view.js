@@ -30,7 +30,9 @@ sap.ui.jsview("app.App", {
         var oModel = new sap.ui.model.json.JSONModel();
     	var myData = {};
     	myData.UserName = "demo"; 
-    	myData.Password = "demo";    		
+    	myData.Password = "demo123";   
+    	myData.FirstName = "Guest";
+    	myData.LastName = "";
     	oModel.setData(myData);
     	sap.ui.getCore().setModel(oModel);
 

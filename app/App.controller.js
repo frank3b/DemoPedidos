@@ -7,6 +7,11 @@ sap.ui
 		    	
 		    sap.ui.localResources("util");	
 		    jQuery.sap.require("util.Utility");	
+		    sap.ui.localResources("model");
+			jQuery.sap.require("model.model");
+			sap.ui.localResources("authentication");
+			jQuery.sap.require("authentication.Authentication");
+			jQuery.sap.require("util.BusyDialogHandler");
 			
 			// Initialize history management
 			var that = this;
