@@ -1,14 +1,14 @@
-var oProductsModel = new sap.ui.model.json.JSONModel();;
+var oProductsModel = new sap.ui.model.json.JSONModel();
 
 
 function getProduct(code) {	
 	var product = {};
 	
 	var oModel = new sap.ui.model.json.JSONModel("model/mockProducts.json");
-	var oData = oModel.getData();
+	var oJSON = oProductsModel.getJSON();
 	
 	var oFilter = new sap.ui.model.Filter("Code", sap.ui.model.FilterOperator.Contains, code);
-	var products = oData.filter( [oFilter] );
+	var products = oJSON.filter( [oFilter] );
 	
 	if(products.lenght > 0) {
 		product = products[0];
