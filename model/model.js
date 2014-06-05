@@ -1,19 +1,17 @@
 var oProductsModel = new sap.ui.model.json.JSONModel();
 
+function getProduct(code) {
+	var product = null;
 
-function getProduct(code) {	
-	var product = {};
-	
-	var oModel = new sap.ui.model.json.JSONModel("model/mockProducts.json");
-	var oJSON = oProductsModel.getJSON();
-	
-	var oFilter = new sap.ui.model.Filter("Code", sap.ui.model.FilterOperator.Contains, code);
-	var products = oJSON.filter( [oFilter] );
-	
-	if(products.lenght > 0) {
-		product = products[0];
+	var oJSON = JSON.parse(oProductsModel.getJSON());
+
+	for ( var i = 0; i < oJSON.length; i++) {
+		if (oJSON[i].Code == code) {
+			product = oJSON[i];
+			break;
+		}
 	}
-	
+
 	return product;
 }
 

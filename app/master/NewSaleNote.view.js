@@ -154,16 +154,21 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		// Create new button
 		var deleteButton = new sap.m.Button({
 			icon : "sap-icon://delete",
-			tap : oController.onDeleteItemsTap			
+			tap : function(oEvent) {
+				oController.onDeleteItemsTap(oEvent);
+			}		
 		});
 		
 		//Products Table
-		var oTableItems = new sap.m.Table("itemsDataTable", {
+		this.oTableItems = new sap.m.Table("itemsDataTable", {
 			mode : "MultiSelect",
 			includeItemInSelection : true,
+			/*delete : function(oEvent) {
+				oController.handleDeleteProduct(oEvent);
+			},*/
 	        headerToolbar : new sap.m.Toolbar({
 	            content : [ new sap.m.Label({
-	                text : "Productos"
+	                text : "{i18n>PRODUCTS_LIST_TITLE}"
 	            }), new sap.m.ToolbarSpacer({}), deleteButton, itemsButton  
 	            ]
 	        }),
@@ -185,7 +190,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	        }) ]
 	    });
 		
-		oTableItems.bindItems("/Products", new sap.m.ColumnListItem({
+		this.oTableItems.bindItems("/Products", new sap.m.ColumnListItem({
 	        cells : [ 
 	            new sap.m.Text({
 	            	text : "{ProductName}"
@@ -212,7 +217,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				icon: "sap-icon://cart-full",
 				iconColor: "Default",
 				key : "cart",
-				content : [ oTableItems ]	
+				content : [ this.oTableItems ]	
 			})
 			]
 		});
