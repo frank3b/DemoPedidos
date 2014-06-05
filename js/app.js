@@ -1,6 +1,6 @@
 sap.ui.localResources("view");
 sap.ui.localResources("model");
-jQuery.sap.registerModulePath('app', 'app');
+jQuery.sap.registerModulePath("app", "app");
 
 /*
 jQuery.sap.require("app.Component");

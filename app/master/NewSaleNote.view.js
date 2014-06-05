@@ -145,6 +145,14 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		});
 		
 		// Create new button
+		var saveButton = new sap.m.Button({
+			icon : "sap-icon://save",
+			tap : function(oEvent) {
+				oController.onSaveSaleNote(oEvent);
+			}		
+		});
+		
+		// Create new button
 		var itemsButton = new sap.m.Button({
 			icon : "sap-icon://add",
 			tap : function(oEvent) {
@@ -161,8 +169,8 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		
 		//Products Table
 		this.oTableItems = new sap.m.Table("itemsDataTable", {
-			mode : "MultiSelect",
-			includeItemInSelection : true,
+			mode : "SingleSelectMaster",
+			//includeItemInSelection : true,
 			/*delete : function(oEvent) {
 				oController.handleDeleteProduct(oEvent);
 			},*/
@@ -227,7 +235,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			showNavButton : true,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
 			content : [ iconTabsBar ],
-			//headerContent : [  ]
+			headerContent : [ saveButton ]
 		});
 	}
 

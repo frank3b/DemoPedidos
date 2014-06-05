@@ -14,15 +14,7 @@
 		},
 	
 "Products" : [
-		{
-			"Code" : "1",
-			"ProductName": "Blaster Extreme",
-			"Price": "9.88",
-			"Weight": "1",
-			"Amount": 2,
-			"CurrencyCode": "COP",
-			"Thumbnail" : "http://sapes1.sapdevcenter.com:8080/SAP/PUBLIC/BC/NWDEMO_MODEL/IMAGES/HT-1001.jpg"
-		}
+		
 	]
 
 }

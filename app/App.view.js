@@ -58,7 +58,7 @@ sap.ui.jsview("app.App", {
         // create the first page in both master and detail areas 
 		this.splitApp.addDetailPage(sap.ui.jsview("app.details.Empty", "app.details.Empty"));
 		this.splitApp.addMasterPage(sap.ui.jsview("app.master.Login", "app.master.Login"));
-		this.splitApp.addMasterPage(sap.ui.jsview("app.master.Menu", "app.master.Menu"));
+		//this.splitApp.addMasterPage(sap.ui.jsview("app.master.Menu", "app.master.Menu"));
 		
 		// navigate to the first page in both master and detail areas.
 		// the toMaster must be called after calling the toDetail, because both of them point to the same reference in phone and 

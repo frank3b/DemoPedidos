@@ -113,37 +113,29 @@ sap.ui.controller("app.master.NewSaleNote", {
 		}
 		evt.getSource().getBinding("items").filter([]);
 	},
-	/*
-	handleDeleteProduct : function (evt) {
-		var itemSelected = evt.getParameter("listItem");
-		evt.getSource().removeItem(itemSelected);
-		var oData = this.getView().getModel().getData();
-		 
-	},
-	*/
+	
 	onDeleteItemsTap : function (evt) {
 		var oList = this.getView().oTableItems;
 		var paths = oList._aSelectedPaths;
 		
-		var itemsSelected = oList.getSelectedItems();
-		for ( var i = 0; i < itemsSelected.length; i++) {
-			oList.removeItem(itemsSelected[i]);
-		}
-		
+		var lpath, posPath;
 		var oData = this.getView().getModel().getData();
-		for ( var i = 0; i < paths.length; i++) {
-			var path = paths[i];
-			
-			var l = path.split("/");
-			var pos = l[l.length - 1];
-			
-			oData.Products.splice(pos, 1);
-			//delete oData.Products[pos];
+		
+		var itemsSelected = oList.getSelectedItems();
+		for ( var i = 0; i < itemsSelected.length; i++) {			
+			//delete from model
+			var sPath = itemsSelected[i].getBindingContext().sPath;
+			var lpath = sPath.split("/");
+			posPath = lpath[lpath.length - 1];
+			oData.Products.splice(posPath, 1);
+			this.getView().getModel().setData(oData);
 		}
+		oList.removeSelections(true);
 		
-		//var binding = oList.getBinding("items");
-		//binding.filter([]);	
-		
+	},
+	
+	onSaveSaleNote : function (evt) {
+		//FIXME - save the sale note in Kinvey
 	}
 	
 });
