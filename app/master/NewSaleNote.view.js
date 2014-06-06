@@ -29,7 +29,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 */
 	createContent : function(oController) {
 		
-		//oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
+		var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
 		
 		this.selectedPetitioner;
 		
@@ -93,6 +93,18 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		//var oLayout1 = new sap.ui.layout.form.GridLayout();
 		//var oLayout2 = new sap.ui.layout.form.ResponsiveLayout();
 		var oLayout3 = new sap.ui.layout.form.ResponsiveGridLayout();
+		
+		this.validFromInput = new sap.m.DateTimeInput({
+			type : "Date",
+			dateValue : "{ValidFrom}",
+			placeholder : "{i18n>DATE_PLACEHOLDER}"
+		});
+		
+		this.validToInput = new sap.m.DateTimeInput({
+			type : "Date",
+			dateValue : "{ValidTo}",
+			placeholder : "{i18n>DATE_PLACEHOLDER}"
+		})
 
 		var oForm1 = new sap.ui.layout.form.Form("F1", {
 			//title : new sap.ui.core.Title({
@@ -101,11 +113,11 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			//}),
 			layout : oLayout3,
 			formContainers : [ new sap.ui.layout.form.FormContainer("F1C1", {
-				//title : "Person data",
+				//title : "Nota de venta",
 				formElements : [ new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_TOTAL_VALUE}",
 					fields : [ new sap.m.Input({
-						value : "0",
+						value : "{TotalWeight}",
 						type : "Number",
 						editable : false
 					})	],
@@ -117,7 +129,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_TOTAL_WEIGHT}",
 					fields : [ new sap.m.Input({
-						value : "0",
+						value : "{TotalValue}",
 						type : "Number",
 						editable : false
 					})	]
@@ -128,19 +140,11 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				}),
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_VALID_FROM}",
-					fields : [ new sap.m.DateTimeInput({
-						type : "Date",
-						dateValue : "{ValidFrom}",
-						placeholder : "{i18n>DATE_PLACEHOLDER}"
-					})	]
+					fields : [ this.validFromInput	]
 				}),
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_VALID_TO}",
-					fields : [ new sap.m.DateTimeInput({
-						type : "Date",
-						dateValue : "{ValidTo}",
-						placeholder : "{i18n>DATE_PLACEHOLDER}"
-					})	]
+					fields : [ this.validToInput ]
 				})
 				]
 			})

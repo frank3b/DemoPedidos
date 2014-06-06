@@ -1,11 +1,11 @@
 {
 "Code" : "", 
-"TotalWeight" : "", 
-"TotalValue" : "",
+"TotalWeight" : "0", 
+"TotalValue" : "0",
 "Status" : "Inicial", 
-"CurrencyCode" : "",
-"ValidFrom" : "", 
-"ValidTo" : "",
+"CurrencyCode" : "COP",
+"ValidFrom" : "01/01/2014",
+"ValidTo" : "Jun 6, 2014",
 "Petitioner" : {			
 		},	
 "Products" : [
