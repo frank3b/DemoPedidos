@@ -77,6 +77,9 @@ sap.ui.controller("app.master.NewSaleNote", {
 		if (oSelectedItem) {
 			var oView = this.getView();
 			oView.petitioner.setValue(oSelectedItem.getTitle());
+			
+			var oData = oView.getModel().getData();
+			oData.Petitioner = getPetitioner(oSelectedItem.getDescription());
 		}
 		evt.getSource().getBinding("items").filter([]);
 	},

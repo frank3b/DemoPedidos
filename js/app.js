@@ -20,5 +20,8 @@ var promise = Kinvey.init({
 });
 
 promise.then( function() {
+	getPetitioners();
 	getProducts();
+	getSalesNotes();
+	
 });

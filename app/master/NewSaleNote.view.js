@@ -31,6 +31,8 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		
 		//oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
 		
+		this.selectedPetitioner;
+		
 		//Products Search Help
 		this.productsHelpDialog = new sap.m.SelectDialog({
 			id : "productsHelpDialog",
@@ -79,7 +81,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				oController.handlePetitionerValueHelpClose(oEvent);
 			}
 		});
-		this.petitionerHelpDialog.setModel(new sap.ui.model.json.JSONModel("model/mockPetitioners.json"));
+		this.petitionerHelpDialog.setModel( oPetitionersModel );
 		
 		var olistPetitionerTemplate = new sap.m.StandardListItem({
 			title : "{FirstName} {LastName}",

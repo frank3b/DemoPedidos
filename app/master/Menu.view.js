@@ -78,15 +78,15 @@ sap.ui.jsview("app.master.Menu", {
 		this.oList.setModel(oSalesNotesModel);
 
 		this.items = new sap.m.ObjectListItem({
-			title : "{Code}",
+			title : "{_id}",
 			number : "{TotalValue}",
 			type : "Active",
 			numberUnit : "{CurrencyCode}",
 			press : [ oController.onListSelect, oController ],
 			attributes : [ new sap.m.ObjectAttribute({
-				text : "{ValidFrom}"
+				text : "{ValidFrom} - {ValidTo}"
 			}), new sap.m.ObjectAttribute({
-				text : "{Petitioner/FirstName}"
+				text : "{Petitioner/FirstName} {Petitioner/LastName}"
 			}) ],
 			firstStatus : new sap.m.ObjectStatus({
 				text : "{Status}"
