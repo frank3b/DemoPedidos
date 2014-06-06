@@ -1,18 +1,13 @@
 {
-"Code":"", 
-"TotalWeight":"", 
-"TotalValue":"",
-"Status":"Pendiente", 
-"CurrencyCode":"",
-"ValidFrom":"", 
-"ValidTo":"",
-"Petitioner": {
-			"Code" : "3",
-			"FirstName" : "Friedrich",
-			"LastName" : "Der Große",
-			"Department" : "Approving Department"
-		},
-	
+"Code" : "", 
+"TotalWeight" : "", 
+"TotalValue" : "",
+"Status" : "Inicial", 
+"CurrencyCode" : "",
+"ValidFrom" : "", 
+"ValidTo" : "",
+"Petitioner" : {			
+		},	
 "Products" : [
 		
 	]

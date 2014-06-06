@@ -130,6 +130,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 					label : "{i18n>SALENOTE_VALID_FROM}",
 					fields : [ new sap.m.DateTimeInput({
 						type : "Date",
+						dateValue : "{ValidFrom}",
 						placeholder : "{i18n>DATE_PLACEHOLDER}"
 					})	]
 				}),
@@ -137,6 +138,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 					label : "{i18n>SALENOTE_VALID_TO}",
 					fields : [ new sap.m.DateTimeInput({
 						type : "Date",
+						dateValue : "{ValidTo}",
 						placeholder : "{i18n>DATE_PLACEHOLDER}"
 					})	]
 				})
