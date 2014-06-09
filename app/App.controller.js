@@ -84,7 +84,7 @@ sap.ui
 							.info(oBundle.getText("LOGGER_ERROR_LOADING_VIEW",[sViewId]));
 						oView = sap.ui.jsview(sViewId, sViewId);
 						(bMaster) ? splitApp.addMasterPage(oView) : splitApp.addDetailPage(oView);
-				    } else if (sViewId == 'app.master.Menu') {
+				    } else {
 						// in case the navigation is from list to
 						// details the details page is already loaded so
 						// the navigation will be failed. therefore we

@@ -11,9 +11,11 @@ sap.ui.jsview("app.master.Menu", {
 		return "app.master.Menu";
 	},
 
-	onBeforeShow : function(oEvent) {
+	onBeforeShow : function(evt) {
 		
-		var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
+		this.getController().onBeforeShow(evt);
+		
+		/*var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
 			success : function(response) {
 				oSalesNotesModel = new sap.ui.model.json.JSONModel();
 				oSalesNotesModel.setJSON(JSON.stringify(response));
@@ -25,9 +27,9 @@ sap.ui.jsview("app.master.Menu", {
 		});
 		
 		promiseSalesNotes.then( function() {
-			//this.oController.onBeforeShow(oEvent);
+			oController.onBeforeShow(evt);
 		});
-		
+		*/
 		
 	},
 	

@@ -207,14 +207,23 @@ sap.ui.controller("app.master.NewSaleNote", {
 							});
 				    		
 				    		promiseDetail.then( function() {
+				    			//is this the last item?
 				    			if( i == oData.Products.length ){
 				    				sap.m.MessageToast.show( oBundle.getText("SALENOTE_SUCCESS_MSG") );
+				    				//Go to Menu List
 				    				sap.ui.getCore().getEventBus().publish("nav", "to", {
 				    					viewId : "app.master.Menu",
 				    					data : {
 				    						bindingContext : oData
 				    					}
 				    				});
+				    				
+				    				
+				    				oData.Petitioner.Code = "";
+				    				oData.Petitioner.FirstName = "";
+				    				oData.Petitioner.LastName = "";
+				    				oData.TotalWeight = 0;
+				    				oData.TotalValue = 0;
 				    			}
 				    		});
 				    	}
