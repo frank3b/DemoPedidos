@@ -113,6 +113,13 @@ sap.ui.controller("app.master.NewSaleNote", {
 			var oData = oView.getModel().getData();
 			oData.Products.push(newProduct);
 			oView.getModel().setData(oData);
+			
+			//Recalculate TotalWeight and TotalValue
+			oData.TotalValue = Number(oData.TotalValue) + Number(product.Price);
+			oData.TotalWeight = Number(oData.TotalWeight) + Number(product.Weight);
+			oView.totalValueInput.setValue(oData.TotalValue);
+			oView.totalWeightInput.setValue(oData.TotalWeight.toString());
+			
 		}
 		evt.getSource().getBinding("items").filter([]);
 	},
@@ -130,32 +137,38 @@ sap.ui.controller("app.master.NewSaleNote", {
 			var sPath = itemsSelected[i].getBindingContext().sPath;
 			var lpath = sPath.split("/");
 			posPath = lpath[lpath.length - 1];
+			var productTmp = oData.Products[posPath];
 			oData.Products.splice(posPath, 1);
 			this.getView().getModel().setData(oData);
+			
+			//Recalculate TotalWeight and TotalValue
+			oData.TotalValue = Number(oData.TotalValue) - Number(productTmp.Price);
+			oData.TotalWeight = Number(oData.TotalWeight) - Number(productTmp.Weight);
+			this.getView().totalValueInput.setValue(oData.TotalValue);
+			this.getView().totalWeightInput.setValue(oData.TotalWeight);
 		}
 		oList.removeSelections(true);
 		
 	},
 	
 	onSaveSaleNote : function (evt) {
-		//FIXME - save the sale note in Kinvey
 		
+		jQuery.sap.require("sap.m.MessageBox");
 		var oData = this.getView().getModel().getData();
 		
-		var validFrom = this.getView().validFromInput;
-		var validTo = this.getView().validToInput;
+		var validFrom = this.getView().validFromInput.getValue();
+		var validTo = this.getView().validToInput.getValue();
 		var petitioner = oData.Petitioner.Code;
 		var totalWeight = oData.TotalWeight;
 		var totalValue = oData.TotalValue;
-		var currencyCode = oData.CurrencyCode;
 		
 		//Validate required fields
 		var isOk = true;
-		if(validFrom.getValue() == null || validFrom.getValue() == '' || validFrom.getValue() == undefined){
+		if(validFrom == null || validFrom == '' || validFrom == undefined){
 			isOk = false;
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_DATE_MSG") );
 		} 
-		if (validTo.getValue() == null || validTo.getValue() == '' || validTo.getValue() == undefined) {
+		if (validTo == null || validTo == '' || validTo == undefined) {
 			isOk = false;
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_DATE_MSG") );
 		}
@@ -164,22 +177,57 @@ sap.ui.controller("app.master.NewSaleNote", {
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_PETITIONER_MSG") );
 		}
 		
-		if(isOk){
-			var saleNote = {};
-			saleNote.ValidFrom = validFrom;
-			saleNote.ValidTo = validTo;
-			saleNote.Petitioner = petitioner;
-			saleNote.TotalWeight = totalWeight;
-			saleNote.CurrencyCode = currencyCode;
-			
-			Kinvey.DataStore.save('SalesNotes', saleNote, {
-			    success: function(response) {
-			    	sap.m.MessageToast.show( 'La nota de venta ha sido almacenada correctamente.' );
-			    },
-		        error: function(error){
-		        	jQuery.sap.log.error("Error saving sales notes..." + error.description);
-				}
-			});
+		if(oData.Products.length > 0){
+			if(isOk){
+				var saleNote = {};
+				saleNote.ValidFrom = validFrom;
+				saleNote.ValidTo = validTo;
+				saleNote.Petitioner = petitioner;
+				saleNote.TotalWeight = totalWeight;
+				saleNote.TotalValue = totalValue;
+				saleNote.Status = oData.Status;
+				saleNote.CurrencyCode = oData.CurrencyCode;
+				
+				Kinvey.DataStore.save('SalesNotes', saleNote, {
+				    success: function(response) {
+				    	//Save the Items				    	
+				    	for ( var i = 0; i < oData.Products.length; i++) {
+				    		var saleNoteDetail = {};
+				    		saleNoteDetail.Amount = oData.Products[i].Amount;
+				    		saleNoteDetail.ProductCode = oData.Products[i].Code;
+				    		saleNoteDetail.SaleNoteId = response._id;
+				    		
+				    		var promiseDetail = Kinvey.DataStore.save('SalesNotesDetail', saleNoteDetail, {
+							    success: function(response) {
+							    	jQuery.sap.log.info("sale note detail saved..." + response._id);
+							    },
+						        error: function(error){
+						        	jQuery.sap.log.error("Error saving sale note detail..." + error.description);
+								}
+							});
+				    		
+				    		promiseDetail.then( function() {
+				    			if( i == oData.Products.length ){
+				    				sap.m.MessageToast.show( oBundle.getText("SALENOTE_SUCCESS_MSG") );
+				    				sap.ui.getCore().getEventBus().publish("nav", "to", {
+				    					viewId : "app.master.Menu",
+				    					data : {
+				    						bindingContext : oData
+				    					}
+				    				});
+				    			}
+				    		});
+				    	}
+				    	
+				    },
+			        error: function(error){
+			        	jQuery.sap.log.error("Error saving sale note..." + error.description);
+					}
+				});
+				
+			}
+		} else {
+			sap.m.MessageBox.alert( oBundle.getText("SALENOTE_PRODUCTS_MSG") );
 		}
 		
 	}

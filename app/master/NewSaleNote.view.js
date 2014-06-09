@@ -17,7 +17,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 * @param oEvent
 	 */
 	onBeforeShow : function(oEvent) {
-		this.getController().onBeforeShow(oEvent);
+		//this.getController().onBeforeShow(oEvent);
 	},
 
 	/**
@@ -28,10 +28,6 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 * @memberOf app.master.NewSaleNote
 	 */
 	createContent : function(oController) {
-		
-		var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
-		
-		this.selectedPetitioner;
 		
 		//Products Search Help
 		this.productsHelpDialog = new sap.m.SelectDialog({
@@ -90,22 +86,30 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		});	
 		this.petitionerHelpDialog.bindAggregation("items", "/", olistPetitionerTemplate);
 		
-		//var oLayout1 = new sap.ui.layout.form.GridLayout();
-		//var oLayout2 = new sap.ui.layout.form.ResponsiveLayout();
+		var oLayout1 = new sap.ui.layout.form.GridLayout();
+		var oLayout2 = new sap.ui.layout.form.ResponsiveLayout();
 		var oLayout3 = new sap.ui.layout.form.ResponsiveGridLayout();
 		
 		this.validFromInput = new sap.m.DateTimeInput({
 			type : "Date",
-			dateValue : "{ValidFrom}",
+			dateValue : "{/ValidFrom}",
 			placeholder : "{i18n>DATE_PLACEHOLDER}"
 		});
-		
 		this.validToInput = new sap.m.DateTimeInput({
 			type : "Date",
-			dateValue : "{ValidTo}",
+			dateValue : "{/ValidTo}",
 			placeholder : "{i18n>DATE_PLACEHOLDER}"
-		})
-
+		});
+		this.totalWeightInput = new sap.m.Input({
+			value : "{/TotalWeight}",
+			type : "Number",
+			editable : false
+		});
+		this.totalValueInput = new sap.m.Input({
+			value : "{/TotalValue}",
+			type : "Number",
+			editable : false
+		});
 		var oForm1 = new sap.ui.layout.form.Form("F1", {
 			//title : new sap.ui.core.Title({
 			//	text : "Datos - Nota de Venta",
@@ -114,26 +118,10 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			layout : oLayout3,
 			formContainers : [ new sap.ui.layout.form.FormContainer("F1C1", {
 				//title : "Nota de venta",
-				formElements : [ new sap.ui.layout.form.FormElement({
-					label : "{i18n>SALENOTE_TOTAL_VALUE}",
-					fields : [ new sap.m.Input({
-						value : "{TotalWeight}",
-						type : "Number",
-						editable : false
-					})	],
-					layoutData : new sap.ui.layout.ResponsiveFlowLayoutData({
-						linebreak : true,
-						margin : true
-					})
-				}),
+				formElements : [ 
 				new sap.ui.layout.form.FormElement({
-					label : "{i18n>SALENOTE_TOTAL_WEIGHT}",
-					fields : [ new sap.m.Input({
-						value : "{TotalValue}",
-						type : "Number",
-						editable : false
-					})	]
-				}),
+					label : ""
+				}),                
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_PETITIONER}",
 					fields : [ this.petitioner ]
@@ -145,6 +133,24 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_VALID_TO}",
 					fields : [ this.validToInput ]
+				})
+				]
+			})
+
+			]
+		});
+		var oForm2 = new sap.ui.layout.form.Form("F2", {
+			layout : oLayout2,
+			formContainers : [ new sap.ui.layout.form.FormContainer("F2C1", {
+				//title : "Nota de venta",
+				formElements : [ 
+				new sap.ui.layout.form.FormElement({
+					label : "{i18n>SALENOTE_TOTAL_VALUE}",
+					fields : [ this.totalValueInput ]
+				}),
+				new sap.ui.layout.form.FormElement({
+					label : "{i18n>SALENOTE_TOTAL_WEIGHT}",
+					fields : [ this.totalWeightInput ]
 				})
 				]
 			})
@@ -218,6 +224,10 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				})
 	        ]
 	    }));
+		var pull = new sap.m.PullToRefresh({
+		    description : "",
+		    refresh : [oController, oController.onPull]
+		});	
 
 		//Icon Tabs
 		var iconTabsBar = new sap.m.IconTabBar({
@@ -228,7 +238,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				icon: "sap-icon://hint",
 				iconColor: "Default",
 				key : "detail",
-				content : [ oForm1 ]	
+				content : [ oForm1, oForm2 ]	
 			}), new sap.m.IconTabFilter({
 				icon: "sap-icon://cart-full",
 				iconColor: "Default",
@@ -242,7 +252,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			title : "{i18n>TITLE__SALE_NOTE}",
 			showNavButton : true,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
-			content : [ iconTabsBar ],
+			content : [ pull, iconTabsBar ],
 			headerContent : [ saveButton ]
 		});
 	}

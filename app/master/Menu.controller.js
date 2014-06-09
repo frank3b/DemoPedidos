@@ -24,9 +24,9 @@ sap.ui.controller("app.master.Menu", {
 	 * 
 	 * @memberOf app.master.Menu
 	 */
-	// onBeforeRendering: function() {
-	//
-	// },
+	 onBeforeShow: function(oEvent) {
+		 this.getView().oList.bindItems("/", this.getView().items);
+	 },
 	/**
 	 * Called when the View has been rendered (so its HTML is part of the
 	 * document). Post-rendering manipulations of the HTML could be done here.
@@ -158,5 +158,14 @@ sap.ui.controller("app.master.Menu", {
 		binding.filter(filters);		
 		
 	},
-
+	
+	loadContent: function(){
+    	var view = this.getView();
+    	view.oList.bindItems("/", view.items);
+	},
+	
+	onPull : function(oEvent, oController){
+		oController.loadContent(oController.oBindingContext);
+		this.hide();
+	}
 });

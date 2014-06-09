@@ -3,9 +3,9 @@
 "TotalWeight" : "0", 
 "TotalValue" : "0",
 "Status" : "Inicial", 
-"CurrencyCode" : "COP",
-"ValidFrom" : "01/01/2014",
-"ValidTo" : "Jun 6, 2014",
+"CurrencyCode" : "PEN",
+"ValidFrom" : "",
+"ValidTo" : "",
 "Petitioner" : {			
 		},	
 "Products" : [

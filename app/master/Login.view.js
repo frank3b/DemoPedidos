@@ -1,8 +1,3 @@
-/*
- * Copyright Frank Bedoya 2013
- * openSAP Mobile 1 MOOC
- */
-
 sap.ui.jsview("app.master.Login", {
 
 	getControllerName: function() {
@@ -14,16 +9,20 @@ sap.ui.jsview("app.master.Login", {
 	},
 	
 	createContent : function(controller) {
-		
+		var mapPannel = new sap.m.Panel('mapPanel');  
+        mapPannel.addContent(new sap.ui.core.HTML( {  
+                 	content : "<div id='map_canvas' style='width: 100%; height: 80px;'></div>"  
+        }));  
 		var ologoBox = new sap.m.FlexBox({
+			alignItems: "Center",
 			justifyContent : "Center",
 			  items: [
 			      new sap.m.Image({	src : "img/logo.png" })
 			  ]
 		});
+		mapPannel.addContent(ologoBox);
 		
 		var oLayout3 = new sap.ui.layout.form.ResponsiveGridLayout();
-
 		var formLogin = new sap.ui.layout.form.Form("FLogin", {
 			//title : new sap.ui.core.Title({
 			//	text : "Datos - Nota de Venta",
@@ -33,6 +32,9 @@ sap.ui.jsview("app.master.Login", {
 			formContainers : [ new sap.ui.layout.form.FormContainer("FL1C1", {
 				//title : "Person data",
 				formElements : [ 
+					new sap.ui.layout.form.FormElement({
+							label : ""
+					}),    
 				    new sap.ui.layout.form.FormElement({
 						label : "{i18n>USER_NAME}",
 						fields : [ new sap.m.Input( { value : "{/UserName}" } )	]
@@ -46,6 +48,8 @@ sap.ui.jsview("app.master.Login", {
 
 			]
 		});
+		
+		mapPannel.addContent(formLogin);
 		
 		// create page
 		this.page = new sap.m.Page({
@@ -64,17 +68,9 @@ sap.ui.jsview("app.master.Login", {
 					}) 
 				]
 			}), 
-			/*
-			 * Here we are just create a list and using Input List Items
-			 * to host the input text boxes for the user name and password
-			 * Please note we are binding to the root of the central
-			 * data model.
-			 * i.e.
-			 * {model}.UserName
-			 * {model}.Password
-			 */
-			content: [  
-			           formLogin 
+			
+			content: [  mapPannel
+			            
 					] 
 			/*content: [ ologoBox, 
 		  		new sap.m.List({

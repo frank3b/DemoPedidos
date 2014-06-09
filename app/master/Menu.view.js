@@ -11,19 +11,8 @@ sap.ui.jsview("app.master.Menu", {
 		return "app.master.Menu";
 	},
 
-	onBeforeRendering : function(oEvent) {
-		getSalesNotes();
-	},
-
-	/**
-	 * Is initially called once after the Controller has been instantiated. It
-	 * is the place where the UI is constructed. Since the Controller is given
-	 * to this method, its event handlers can be attached right away.
-	 * 
-	 * @memberOf app.master.Menu
-	 */
-	createContent : function(oController) {
-
+	onBeforeShow : function(oEvent) {
+		
 		var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
 			success : function(response) {
 				oSalesNotesModel = new sap.ui.model.json.JSONModel();
@@ -34,7 +23,23 @@ sap.ui.jsview("app.master.Menu", {
 						+ error.description);
 			}
 		});
+		
+		promiseSalesNotes.then( function() {
+			//this.oController.onBeforeShow(oEvent);
+		});
+		
+		
+	},
+	
 
+	/**
+	 * Is initially called once after the Controller has been instantiated. It
+	 * is the place where the UI is constructed. Since the Controller is given
+	 * to this method, its event handlers can be attached right away.
+	 * 
+	 * @memberOf app.master.Menu
+	 */
+	createContent : function(oController) {
 		// var oModel = new
 		// sap.ui.model.json.JSONModel("model/mockSalesNotes.json");
 		// Menu
