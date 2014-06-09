@@ -163,10 +163,15 @@ sap.ui.jsview("app.master.Menu", {
 				iconColor : sap.ui.core.IconColor.Negative
 			}) ]
 		});
+		
+		var pull = new sap.m.PullToRefresh({
+		    description : "",
+		    refresh : [oController, oController.onPull]
+		});	
 
 		return new sap.m.Page({
 			title : "{i18n>TITLE__MENU}",
-			content : [ iconTabBar ],
+			content : [ pull, iconTabBar ],
 			headerContent : [ menuButton ],
 		/*
 		 * footer : new sap.m.Bar({ contentRight : [ this.filterSelect ] })

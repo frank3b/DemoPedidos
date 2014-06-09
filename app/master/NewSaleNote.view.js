@@ -224,10 +224,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 				})
 	        ]
 	    }));
-		var pull = new sap.m.PullToRefresh({
-		    description : "",
-		    refresh : [oController, oController.onPull]
-		});	
+		
 
 		//Icon Tabs
 		var iconTabsBar = new sap.m.IconTabBar({
@@ -252,7 +249,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 			title : "{i18n>TITLE__SALE_NOTE}",
 			showNavButton : true,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
-			content : [ pull, iconTabsBar ],
+			content : [ iconTabsBar ],
 			headerContent : [ saveButton ]
 		});
 	}

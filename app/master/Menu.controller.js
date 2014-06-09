@@ -160,12 +160,27 @@ sap.ui.controller("app.master.Menu", {
 	},
 	
 	loadContent: function(){
-    	var view = this.getView();
-    	view.oList.bindItems("/", view.items);
+		var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
+			success : function(response) {
+				oSalesNotesModel = new sap.ui.model.json.JSONModel();
+				oSalesNotesModel.setJSON(JSON.stringify(response));
+			},
+			error : function(error) {
+				jQuery.sap.log.error("Error getting sales notes..."
+						+ error.description);
+			}
+		});
+		
+		promiseSalesNotes.then( function() {
+			//this.getView().oList.setModel(oSalesNotesModel);
+			this.getView().oList.bindItems("/", view.items);
+		});
+		
+    	
 	},
 	
 	onPull : function(oEvent, oController){
-		oController.loadContent(oController.oBindingContext);
+		oController.loadContent();
 		this.hide();
 	}
 });
