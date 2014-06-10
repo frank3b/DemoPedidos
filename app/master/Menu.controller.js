@@ -54,7 +54,7 @@ sap.ui.controller("app.master.Menu", {
 		var oFilter = null;
 		
 		if (sKey === "StatusPositive") {
-			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Final");
+			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Terminado");
 		} else if (sKey === "StatusNegative") {
 			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Pendiente");
 		} 

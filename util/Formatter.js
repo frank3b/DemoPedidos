@@ -16,7 +16,7 @@ util.formatter = {
 		_statusStateMap : {
 			"Inicial" : "Warning",
 			"Pendiente" : "Error",
-			"Final" : "Success"
+			"Terminado" : "Success"
 		},
 		
 		StatusState :  function (value) {
