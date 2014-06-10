@@ -6,11 +6,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 * @memberOf app.master.NewSaleNote
 */
 	onInit: function() {
-		var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
-		this.getView().setModel(oModel);
 		
-		//var oModelPetitioner = new sap.ui.model.json.JSONModel("model/mockPetitioners.json");
-		//sap.ui.getCore().setModel(oModelPetitioner, "PetitionerCollection");
 	},
 
 /**
@@ -40,8 +36,14 @@ sap.ui.controller("app.master.NewSaleNote", {
 //	}
 	
 	onBeforeShow : function(oEvent) {
-		//this.getView().bindElement(oData.data.bindingContext.getPath());
+		var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
+		this.getView().setModel(oModel);
 		
+		//clean the new sale note data
+		this.getView().validFromInput.setValue("");
+		this.getView().validToInput.setValue("");
+		this.getView().petitioner.setValue("");
+		this.getView().totalValueInput.setNumber(0);
 	},
 	
 	onNavButtonTap : function() {
@@ -115,10 +117,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 			oView.getModel().setData(oData);
 			
 			//Recalculate TotalWeight and TotalValue
-			oData.TotalValue = Number(oData.TotalValue) + Number(product.Price);
-			oData.TotalWeight = Number(oData.TotalWeight) + Number(product.Weight);
-			oView.totalValueInput.setValue(oData.TotalValue);
-			oView.totalWeightInput.setValue(oData.TotalWeight.toString());
+			this._recalculateTotalValues();
 			
 		}
 		evt.getSource().getBinding("items").filter([]);
@@ -142,10 +141,7 @@ sap.ui.controller("app.master.NewSaleNote", {
 			this.getView().getModel().setData(oData);
 			
 			//Recalculate TotalWeight and TotalValue
-			oData.TotalValue = Number(oData.TotalValue) - Number(productTmp.Price);
-			oData.TotalWeight = Number(oData.TotalWeight) - Number(productTmp.Weight);
-			this.getView().totalValueInput.setValue(oData.TotalValue);
-			this.getView().totalWeightInput.setValue(oData.TotalWeight);
+			this._recalculateTotalValues();
 		}
 		oList.removeSelections(true);
 		
@@ -218,12 +214,6 @@ sap.ui.controller("app.master.NewSaleNote", {
 				    					}
 				    				});
 				    				
-				    				
-				    				oData.Petitioner.Code = "";
-				    				oData.Petitioner.FirstName = "";
-				    				oData.Petitioner.LastName = "";
-				    				oData.TotalWeight = 0;
-				    				oData.TotalValue = 0;
 				    			}
 				    		});
 				    	}
@@ -238,6 +228,30 @@ sap.ui.controller("app.master.NewSaleNote", {
 		} else {
 			sap.m.MessageBox.alert( oBundle.getText("SALENOTE_PRODUCTS_MSG") );
 		}
+		
+	},
+	
+	onAmountChanged : function (oEvent){
+		var sValue = oEvent.getParameter("newValue");
+		if(sValue){
+			this._recalculateTotalValues();	
+		}
+			
+	},
+	
+	_recalculateTotalValues : function (){
+		//recalculate TotalValue and TotalWeight
+		var oData = this.getView().getModel().getData();
+		oData.TotalValue = 0;
+		oData.TotalWeight = 0;
+		for ( var i = 0; i < oData.Products.length; i++) {
+			var productSelected = oData.Products[i];
+			
+			oData.TotalValue = Number(oData.TotalValue) + Number( productSelected.Price * productSelected.Amount );
+			oData.TotalWeight = Number(oData.TotalWeight) + Number(productSelected.Weight * productSelected.Amount );
+		}
+		this.getView().totalValueInput.setNumber(util.formatter.Number(oData.TotalValue));
+		this.getView().totalWeightInput.setNumber(oData.TotalWeight);
 		
 	}
 	

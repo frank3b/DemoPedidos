@@ -1,8 +1,9 @@
-jQuery.sap.declare("util.Formatter"); 
+jQuery.sap.declare("util.formatter"); 
 
 jQuery.sap.require("sap.ui.core.format.DateFormat");
+jQuery.sap.require("sap.ui.core.format.NumberFormat");
 
-pedidos.util.formatter = {
+util.formatter = {
 		//Function that formats date time values as received from an Odata service. 
 		fnDateTimeFormatter : function(oValue){
 			if (oValue == undefined || oValue == "")
@@ -13,12 +14,12 @@ pedidos.util.formatter = {
 		},
 		
 		_statusStateMap : {
-			"Neu" : "Warning",
-			"Initial" : "Success"
+			"Inicial" : "Warning",
+			"Final" : "Success"
 		},
 		
 		StatusState :  function (value) {
-			return (value && pedidos.util.formatter._statusStateMap[value]) ? pedidos.util.formatter._statusStateMap[value] : "None";
+			return (value && util.formatter._statusStateMap[value]) ? util.formatter._statusStateMap[value] : "None";
 		},
 		
 		Quantity :  function (value) {
@@ -48,6 +49,21 @@ pedidos.util.formatter = {
 			var map = pedidos.util.formatter.AttachmentMap;
 			var code = (value && map[value]) ? map[value] : "question-mark";
 			return "sap-icon://" + code;
+		},
+		
+		Number : function (value) {
+			if(value){
+				var oNumberFormat = sap.ui.core.format.NumberFormat.getFloatInstance({
+					  maxFractionDigits: 2,
+					  groupingEnabled: true,
+					  groupingSeparator: ",",
+					  decimalSeparator: "."
+				});
+				return oNumberFormat.format(value);
+			} else {
+				return value;
+			}
+			
 		}
 		
 };		

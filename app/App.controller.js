@@ -6,12 +6,13 @@ sap.ui
 		    onInit : function() {
 		    	
 		    sap.ui.localResources("util");	
-		    jQuery.sap.require("util.Utility");	
 		    sap.ui.localResources("model");
+		    sap.ui.localResources("authentication");
+		    jQuery.sap.require("util.Utility");	
+		    jQuery.sap.require("util.formatter");
+		    jQuery.sap.require("util.BusyDialogHandler");
 			jQuery.sap.require("model.model");
-			sap.ui.localResources("authentication");
 			jQuery.sap.require("authentication.Authentication");
-			jQuery.sap.require("util.BusyDialogHandler");
 			
 			// Initialize history management
 			var that = this;
@@ -84,7 +85,7 @@ sap.ui
 							.info(oBundle.getText("LOGGER_ERROR_LOADING_VIEW",[sViewId]));
 						oView = sap.ui.jsview(sViewId, sViewId);
 						(bMaster) ? splitApp.addMasterPage(oView) : splitApp.addDetailPage(oView);
-				    } else {
+				    } else if(!bMaster){
 						// in case the navigation is from list to
 						// details the details page is already loaded so
 						// the navigation will be failed. therefore we

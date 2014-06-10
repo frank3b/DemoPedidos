@@ -17,7 +17,7 @@ sap.ui.jsview("app.master.Login", {
 			alignItems: "Center",
 			justifyContent : "Center",
 			  items: [
-			      new sap.m.Image({	src : "img/logo.png" })
+			      new sap.m.Image({	src : "img/logo2.png" })
 			  ]
 		});
 		mapPannel.addContent(ologoBox);

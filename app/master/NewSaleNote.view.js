@@ -17,7 +17,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 * @param oEvent
 	 */
 	onBeforeShow : function(oEvent) {
-		//this.getController().onBeforeShow(oEvent);
+		this.getController().onBeforeShow(oEvent);
 	},
 
 	/**
@@ -93,23 +93,23 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		this.validFromInput = new sap.m.DateTimeInput({
 			type : "Date",
 			dateValue : "{/ValidFrom}",
+			displayFormat : "dd-MM-yyyy",
 			placeholder : "{i18n>DATE_PLACEHOLDER}"
 		});
 		this.validToInput = new sap.m.DateTimeInput({
 			type : "Date",
 			dateValue : "{/ValidTo}",
+			displayFormat : "dd-MM-yyyy",
 			placeholder : "{i18n>DATE_PLACEHOLDER}"
 		});
-		this.totalWeightInput = new sap.m.Input({
-			value : "{/TotalWeight}",
-			type : "Number",
-			editable : false
+		this.totalWeightInput = new sap.m.ObjectNumber({
+			number : "{/TotalWeight}"
 		});
-		this.totalValueInput = new sap.m.Input({
-			value : "{/TotalValue}",
-			type : "Number",
-			editable : false
+		this.totalValueInput = new sap.m.ObjectNumber({
+			number : "0",
+			unit : "{/CurrencyCode}"
 		});
+		//sap.m.DisplayListItem({ label : oBundle.getText("SALESORDER_CREATEDAT"), value :{path : "CreatedAt", formatter : fnDateTimeFormatter}})
 		var oForm1 = new sap.ui.layout.form.Form("F1", {
 			//title : new sap.ui.core.Title({
 			//	text : "Datos - Nota de Venta",
@@ -220,6 +220,9 @@ sap.ui.jsview("app.master.NewSaleNote", {
 		            text : "{Price}"
 		        }), new sap.m.Input({
 					value : "{Amount}",
+					liveChange : function(oEvent) {
+						oController.onAmountChanged(oEvent);
+					},
 					type : "Number"
 				})
 	        ]

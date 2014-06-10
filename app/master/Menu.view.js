@@ -15,22 +15,6 @@ sap.ui.jsview("app.master.Menu", {
 		
 		this.getController().onBeforeShow(evt);
 		
-		/*var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
-			success : function(response) {
-				oSalesNotesModel = new sap.ui.model.json.JSONModel();
-				oSalesNotesModel.setJSON(JSON.stringify(response));
-			},
-			error : function(error) {
-				jQuery.sap.log.error("Error getting sales notes..."
-						+ error.description);
-			}
-		});
-		
-		promiseSalesNotes.then( function() {
-			oController.onBeforeShow(evt);
-		});
-		*/
-		
 	},
 	
 
@@ -86,7 +70,7 @@ sap.ui.jsview("app.master.Menu", {
 
 		this.items = new sap.m.ObjectListItem({
 			title : "{_id}",
-			number : "{TotalValue}",
+			number : {path : "TotalValue", formatter : util.formatter.Number},
 			type : "Active",
 			numberUnit : "{CurrencyCode}",
 			press : [ oController.onListSelect, oController ],
@@ -96,7 +80,9 @@ sap.ui.jsview("app.master.Menu", {
 				text : "{Petitioner/FirstName} {Petitioner/LastName}"
 			}) ],
 			firstStatus : new sap.m.ObjectStatus({
-				text : "{Status}"
+				text : "{Status}",
+				state: { path: 'Status',
+					formatter: util.formatter.StatusState }
 			})
 		});
 		this.oList.bindItems("/", this.items);
