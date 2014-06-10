@@ -9,13 +9,12 @@ sap.ui.controller("app.master.Menu", {
 	 * @memberOf app.master.Menu
 	 */
 	 onInit: function() {
-			var oView = this.getView();
-			var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Inicial");
+			//var oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Inicial");
 			
 			// update list binding
-			var list = oView.oList;
+			var list = this.getView().oList;
 			var binding = list.getBinding("items");
-			binding.filter([oFilter]);
+			binding.filter([]);
 	 },
 	/**
 	 * Similar to onAfterRendering, but this hook is invoked before the
