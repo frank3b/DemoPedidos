@@ -74,7 +74,8 @@ sap.ui.jsview("app.master.Menu", {
 			type : "Active",
 			numberUnit : "{CurrencyCode}",
 			press : [ oController.onListSelect, oController ],
-			attributes : [ new sap.m.ObjectAttribute({
+			attributes : [ 
+			new sap.m.ObjectAttribute({
 				text : "{ValidFrom} - {ValidTo}"
 			}), new sap.m.ObjectAttribute({
 				text : "{Petitioner/FirstName} {Petitioner/LastName}"
@@ -135,17 +136,17 @@ sap.ui.jsview("app.master.Menu", {
 				oController.handleTabSelect(oEvent);
 			},
 			items : [ new sap.m.IconTabFilter({
-				key : "Status1",
-				design : "Horizontal",
-				icon : "sap-icon://flag",
-				iconColor : "Positive"
-			}), new sap.m.IconTabFilter({
-				key : "Status2",
+				key : "StatusDefault",
 				design : "Horizontal",
 				icon : "sap-icon://flag",
 				iconColor : sap.ui.core.IconColor.Default
 			}), new sap.m.IconTabFilter({
-				key : "Status3",
+				key : "StatusPositive",
+				design : "Horizontal",
+				icon : "sap-icon://flag",
+				iconColor : sap.ui.core.IconColor.Positive
+			}), new sap.m.IconTabFilter({
+				key : "StatusNegative",
 				design : "Horizontal",
 				icon : "sap-icon://flag",
 				iconColor : sap.ui.core.IconColor.Negative

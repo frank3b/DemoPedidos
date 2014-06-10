@@ -1,4 +1,4 @@
-sap.ui.controller("app.master.NewSaleNote", {
+sap.ui.controller("app.details.NewSaleNote", {
 
 /**
 * Called when a controller is instantiated and its View controls (if available) are already created.

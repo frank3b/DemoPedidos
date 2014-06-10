@@ -15,6 +15,7 @@ util.formatter = {
 		
 		_statusStateMap : {
 			"Inicial" : "Warning",
+			"Pendiente" : "Error",
 			"Final" : "Success"
 		},
 		

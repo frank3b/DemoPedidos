@@ -53,20 +53,20 @@ sap.ui.controller("app.master.Menu", {
 		var sKey = oEvent.getParameter("selectedKey");
 		var oFilter = null;
 		
-		if (sKey === "Status1") {
-			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Inicial");
-		} else if (sKey === "Status2") {
+		if (sKey === "StatusPositive") {
+			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Final");
+		} else if (sKey === "StatusNegative") {
 			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Pendiente");
-		} else if (sKey === "Status3") {
-			oFilter = new sap.ui.model.Filter("Status", sap.ui.model.FilterOperator.Contains, "Terminado");
-		}
+		} 
 		
-		if(oFilter){
-			// update list binding
-			var oView = this.getView();
-			var list = oView.oList;
-			var binding = list.getBinding("items");
+		// update list binding
+		var oView = this.getView();
+		var list = oView.oList;
+		var binding = list.getBinding("items");
+		if(oFilter){			
 			binding.filter([oFilter]);
+		} else {
+			binding.filter([]);
 		}
 		
 	},
@@ -78,11 +78,13 @@ sap.ui.controller("app.master.Menu", {
 	},
 	
 	onListSelect : function(oEvent) {
-		alert('list select...');
+		//FIXME - implement 
+		//alert('list select...');
 	},
 
 	onBills : function(oEvent) {
-		alert('onBills...');
+		//FIXME - implement 
+		//alert('onBills...');
 	},
 
 	onExit : function(oEvent) {
@@ -100,7 +102,7 @@ sap.ui.controller("app.master.Menu", {
 		var oBindingContext = oEvent.oSource.getBindingContext();
 
 		sap.ui.getCore().getEventBus().publish("nav", "to", {
-			viewId : "app.master.NewSaleNote",
+			viewId : "app.details.NewSaleNote",
 			data : {
 				bindingContext : oBindingContext
 			}
@@ -108,11 +110,13 @@ sap.ui.controller("app.master.Menu", {
 	},
 	
 	onNewSalesOrders : function(oEvent) {
-		alert('onNewSalesOrders');
+		//FIXME - implement 
+		//alert('onNewSalesOrders');
 	},
 	
 	onConfig : function(oEvent) {
-		alert('onConfig');
+		//FIXME - implement 
+		//alert('onConfig');
 	},
 	
 	handleFilterChange : function(oEvent) {
@@ -148,7 +152,7 @@ sap.ui.controller("app.master.Menu", {
 		// add filter for search
 		var searchString = oView.searchField.getValue();
 		if (searchString && searchString.length > 0) {
-			var filter = new sap.ui.model.Filter("Code", sap.ui.model.FilterOperator.Contains, searchString);
+			var filter = new sap.ui.model.Filter("Petitioner/FirstName", sap.ui.model.FilterOperator.Contains, searchString);
 			filters.push(filter);
 		}		
 		
@@ -165,6 +169,10 @@ sap.ui.controller("app.master.Menu", {
 		var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
 			success : function(response) {
 				oSalesNotesModel = new sap.ui.model.json.JSONModel();
+				for ( var i = 0; i < response.length; i++) {
+					var petitioner = getPetitioner(response[i].Petitioner);
+					response[i].Petitioner = petitioner;
+				}
 				oSalesNotesModel.setJSON(JSON.stringify(response));
 			},
 			error : function(error) {

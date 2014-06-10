@@ -31,24 +31,6 @@ function getProducts() {
 	});
 }
 
-function getSalesNotes() {
-	var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null,	{
-		success : function(response) {
-			oSalesNotesModel = new sap.ui.model.json.JSONModel();
-			
-			for ( var i = 0; i < response.length; i++) {
-				var petitioner = getPetitioner(response[i].Petitioner);
-				response[i].Petitioner = petitioner;
-			}
-			oSalesNotesModel.setJSON(JSON.stringify(response));
-		},
-		error : function(error) {
-			jQuery.sap.log.error("Error getting sales notes..." + error.description);
-		}
-	});
-	
-}
-
 function getPetitioner(code) {
 	var petitioner = null;
 

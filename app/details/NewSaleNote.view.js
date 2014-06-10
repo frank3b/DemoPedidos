@@ -1,4 +1,4 @@
-sap.ui.jsview("app.master.NewSaleNote", {
+sap.ui.jsview("app.details.NewSaleNote", {
 
 	/**
 	 * Specifies the Controller belonging to this View. In the case that it is
@@ -8,7 +8,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 	 * @memberOf app.master.NewSaleNote
 	 */
 	getControllerName : function() {
-		return "app.master.NewSaleNote";
+		return "app.details.NewSaleNote";
 	},
 
 	/**
@@ -250,7 +250,7 @@ sap.ui.jsview("app.master.NewSaleNote", {
 
 		return new sap.m.Page({
 			title : "{i18n>TITLE__SALE_NOTE}",
-			showNavButton : true,
+			showNavButton : jQuery.device.is.phone,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
 			content : [ iconTabsBar ],
 			headerContent : [ saveButton ]
