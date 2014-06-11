@@ -14,6 +14,8 @@ sap.ui
 			jQuery.sap.require("model.model");
 			jQuery.sap.require("authentication.Authentication");
 			
+			loadTheme("sap_bluecrystal");
+			
 			// Initialize history management
 			var that = this;
 			this.oEventBus = sap.ui.getCore().getEventBus();
@@ -91,7 +93,9 @@ sap.ui
 						// the navigation will be failed. therefore we
 						// need to call before show event in order to
 						// refresh the details page data.
-						oView.onBeforeShow(oData);
+				    	if(sViewId != 'app.details.Empty'){
+				    		oView.onBeforeShow(oData);
+				    	}
 			    	}
 				    (bMaster) ? splitApp.toMaster(sViewId, oDataObject)
 					    : splitApp.toDetail(sViewId, oDataObject);

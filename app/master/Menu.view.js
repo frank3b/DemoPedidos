@@ -26,8 +26,6 @@ sap.ui.jsview("app.master.Menu", {
 	 * @memberOf app.master.Menu
 	 */
 	createContent : function(oController) {
-		// var oModel = new
-		// sap.ui.model.json.JSONModel("model/mockSalesNotes.json");
 		// Menu
 		this._actionSheet = new sap.m.ActionSheet({
 			title : "{i18n>MENU_TITLE}",
@@ -54,7 +52,7 @@ sap.ui.jsview("app.master.Menu", {
 			}), new sap.m.Button({
 				text : "{i18n>MENU_CONFIG}",
 				icon : "sap-icon://action-settings",
-				press : [ oController.onConfig, oController ],
+				press : [ oController.onPersonalizationButtonTap, oController ],
 			}), new sap.m.Button({
 				text : "{i18n>MENU_CLOSE}",
 				icon : "sap-icon://log",
@@ -139,7 +137,7 @@ sap.ui.jsview("app.master.Menu", {
 				key : "StatusDefault",
 				design : "Horizontal",
 				icon : "sap-icon://flag",
-				iconColor : sap.ui.core.IconColor.Default
+				iconColor : sap.ui.core.IconColor.Neutral
 			}), new sap.m.IconTabFilter({
 				key : "StatusPositive",
 				design : "Horizontal",

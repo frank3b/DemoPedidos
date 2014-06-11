@@ -1,4 +1,4 @@
-sap.ui.controller("com.products.ThemeSetting", {
+sap.ui.controller("app.details.ThemeSetting", {
 
 	onNavButtonTap : function() {
 		sap.ui.getCore().getEventBus().publish("nav", "back");

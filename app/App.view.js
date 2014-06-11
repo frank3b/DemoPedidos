@@ -5,7 +5,7 @@ sap.ui.jsview("app.App", {
     },
 
     createContent: function(oController) {
-
+    	
         // set i18n model
         var oI18nModel = new sap.ui.model.resource.ResourceModel({
             bundleUrl: "i18n/i18n.properties"

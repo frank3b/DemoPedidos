@@ -113,11 +113,6 @@ sap.ui.controller("app.master.Menu", {
 		//alert('onNewSalesOrders');
 	},
 	
-	onConfig : function(oEvent) {
-		//FIXME - implement 
-		//alert('onConfig');
-	},
-	
 	handleFilterChange : function(oEvent) {
 		var filters = [];
 		var oView = this.getView();
@@ -191,5 +186,14 @@ sap.ui.controller("app.master.Menu", {
 	onPull : function(oEvent, oController){
 		oController.loadContent();
 		this.hide();
-	}
+	},
+	
+	onPersonalizationButtonTap : function() {
+
+        sap.ui.getCore().getEventBus().publish("nav", "to", {
+    		viewId : "app.master.SettingsCategories",
+    		data : ""
+        });
+
+    },
 });

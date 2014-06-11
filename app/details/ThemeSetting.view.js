@@ -1,11 +1,11 @@
-sap.ui.jsview("com.products.ThemeSetting", {
+sap.ui.jsview("app.details.ThemeSetting", {
 
 	onBeforeShow : function(oEvent) {
 		return;
 	},
 
 	getControllerName : function() {
-		return "com.products.ThemeSetting";
+		return "app.details.ThemeSetting";
 	},
 
 	createContent : function(oController) {
@@ -14,13 +14,12 @@ sap.ui.jsview("com.products.ThemeSetting", {
 		//var bBlueCrystalSelected = !oStorage.get(sKeyTheme)
 		//		|| oStorage.get(sKeyTheme) == "sap_bluecrystal";
 		
-		
 		var bBlueCrystalSelected = false;
-		var bMviSelected = false;
+		var bGoldreflection = false;
 		var bCustomSelected = false;
 		switch (oStorage.get(sKeyTheme)) {
-			case "sap_mvi":
-				bMviSelected = true;
+			case "sap_goldreflection":
+				bGoldreflection = true;
 				break;
 			case "sap_bluecrystal":
 				bBlueCrystalSelected = true;
@@ -33,23 +32,22 @@ sap.ui.jsview("com.products.ThemeSetting", {
 				break;
 		}
 		
-		
 		this.page = new sap.m.Page({
 			showNavButton : jQuery.device.is.phone,
 			navButtonTap : [ oController.onNavButtonTap, oController ],
 			content : [ new sap.m.List({
 				mode : sap.m.ListMode.SingleSelect,
 				select : [ oController.onListItemTap ],
-				items : [ new sap.m.StandardListItem({
-					title : "sap_mvi",
-					selected : bMviSelected,
-				}).data(sKeyTheme, "sap_mvi"), new sap.m.StandardListItem({
-					title : "sap_bluecrystal",
-					selected : bBlueCrystalSelected,
-				}).data(sKeyTheme, "sap_bluecrystal"), new sap.m.StandardListItem({
-					title : "custom_bluecrystal",
-					selected : bCustomSelected,
-				}).data(sKeyTheme, "custom_bluecrystal") ],
+				items : [ 					
+					new sap.m.StandardListItem({
+						title : "sap_bluecrystal",
+						selected : bBlueCrystalSelected,
+					}).data(sKeyTheme, "sap_bluecrystal"), 
+					new sap.m.StandardListItem({
+						title : "custom_maestro",
+						selected : bCustomSelected,
+					}).data(sKeyTheme, "custom_bluecrystal")
+				],
 			}), ],
 		});
 		

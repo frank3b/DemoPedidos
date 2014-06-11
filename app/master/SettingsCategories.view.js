@@ -1,8 +1,8 @@
-sap.ui.jsview("com.products.SettingsCategories", {
+sap.ui.jsview("app.master.SettingsCategories", {
 
 
     getControllerName : function() {
-    	return "com.products.SettingsCategories";
+    	return "app.master.SettingsCategories";
     },
 
     createContent : function(oController) {
