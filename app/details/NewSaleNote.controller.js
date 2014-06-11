@@ -163,70 +163,68 @@ sap.ui.controller("app.details.NewSaleNote", {
 		if(validFrom == null || validFrom == '' || validFrom == undefined){
 			isOk = false;
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_DATE_MSG") );
-		} 
-		if (validTo == null || validTo == '' || validTo == undefined) {
+		} else if (validTo == null || validTo == '' || validTo == undefined) {
 			isOk = false;
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_DATE_MSG") );
-		}
-		if(petitioner == null || petitioner == '' || petitioner == undefined){
+		} else if(petitioner == null || petitioner == '' || petitioner == undefined){
 			isOk = false;
 			sap.m.MessageToast.show( oBundle.getText("SALENOTE_PETITIONER_MSG") );
-		}
-		
-		if(oData.Products.length > 0){
-			if(isOk){
-				var saleNote = {};
-				saleNote.ValidFrom = validFrom;
-				saleNote.ValidTo = validTo;
-				saleNote.Petitioner = petitioner;
-				saleNote.TotalWeight = totalWeight;
-				saleNote.TotalValue = totalValue;
-				saleNote.Status = oData.Status;
-				saleNote.CurrencyCode = oData.CurrencyCode;
-				
-				Kinvey.DataStore.save('SalesNotes', saleNote, {
-				    success: function(response) {
-				    	//Save the Items				    	
-				    	for ( var i = 0; i < oData.Products.length; i++) {
-				    		var saleNoteDetail = {};
-				    		saleNoteDetail.Amount = oData.Products[i].Amount;
-				    		saleNoteDetail.ProductCode = oData.Products[i].Code;
-				    		saleNoteDetail.SaleNoteId = response._id;
-				    		
-				    		var promiseDetail = Kinvey.DataStore.save('SalesNotesDetail', saleNoteDetail, {
-							    success: function(response) {
-							    	jQuery.sap.log.info("sale note detail saved..." + response._id);
-							    },
-						        error: function(error){
-						        	jQuery.sap.log.error("Error saving sale note detail..." + error.description);
-								}
-							});
-				    		
-				    		promiseDetail.then( function() {
-				    			//is this the last item?
-				    			if( i == oData.Products.length ){
-				    				sap.m.MessageToast.show( oBundle.getText("SALENOTE_SUCCESS_MSG") );
-				    				//Go to Menu List
-				    				sap.ui.getCore().getEventBus().publish("nav", "to", {
-				    					viewId : "app.master.Menu",
-				    					data : {
-				    						bindingContext : oData
-				    					}
-				    				});
-				    				
-				    			}
-				    		});
-				    	}
-				    	
-				    },
-			        error: function(error){
-			        	jQuery.sap.log.error("Error saving sale note..." + error.description);
-					}
-				});
-				
-			}
 		} else {
-			sap.m.MessageBox.alert( oBundle.getText("SALENOTE_PRODUCTS_MSG") );
+			if(oData.Products.length > 0){
+				if(isOk){
+					var saleNote = {};
+					saleNote.ValidFrom = validFrom;
+					saleNote.ValidTo = validTo;
+					saleNote.Petitioner = petitioner;
+					saleNote.TotalWeight = totalWeight;
+					saleNote.TotalValue = totalValue;
+					saleNote.Status = oData.Status;
+					saleNote.CurrencyCode = oData.CurrencyCode;
+					
+					Kinvey.DataStore.save('SalesNotes', saleNote, {
+					    success: function(response) {
+					    	//Save the Items				    	
+					    	for ( var i = 0; i < oData.Products.length; i++) {
+					    		var saleNoteDetail = {};
+					    		saleNoteDetail.Amount = oData.Products[i].Amount;
+					    		saleNoteDetail.ProductCode = oData.Products[i].Code;
+					    		saleNoteDetail.SaleNoteId = response._id;
+					    		
+					    		var promiseDetail = Kinvey.DataStore.save('SalesNotesDetail', saleNoteDetail, {
+								    success: function(response) {
+								    	jQuery.sap.log.info("sale note detail saved..." + response._id);
+								    },
+							        error: function(error){
+							        	jQuery.sap.log.error("Error saving sale note detail..." + error.description);
+									}
+								});
+					    		
+					    		promiseDetail.then( function() {
+					    			//is this the last item?
+					    			if( i == oData.Products.length ){
+					    				sap.m.MessageToast.show( oBundle.getText("SALENOTE_SUCCESS_MSG") );
+					    				//Go to Menu List
+					    				sap.ui.getCore().getEventBus().publish("nav", "to", {
+					    					viewId : "app.master.Menu",
+					    					data : {
+					    						bindingContext : oData
+					    					}
+					    				});
+					    				
+					    			}
+					    		});
+					    	}
+					    	
+					    },
+				        error: function(error){
+				        	jQuery.sap.log.error("Error saving sale note..." + error.description);
+						}
+					});
+					
+				}
+			} else {
+				sap.m.MessageBox.alert( oBundle.getText("SALENOTE_PRODUCTS_MSG") );
+			}
 		}
 		
 	},
