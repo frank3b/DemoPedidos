@@ -1,8 +1,6 @@
-var oProductsModel = new sap.ui.model.json.JSONModel();
 var oSalesNotesModel = new sap.ui.model.json.JSONModel();
-var oPetitionersModel = new sap.ui.model.json.JSONModel();
-
-
+var oPetitionersModel = null;
+var oProductsModel = null;
 
 function getProduct(code) {
 	var product = null;

@@ -25,6 +25,13 @@ sap.ui.controller("app.master.Menu", {
 	 */
 	 onBeforeShow: function(oEvent) {
 		 this.loadContent();
+		  
+		 if(oProductsModel == null){
+			 getProducts();
+		 }
+		 if(oPetitionersModel == null){
+			 getPetitioners();
+		 } 
 	 },
 	/**
 	 * Called when the View has been rendered (so its HTML is part of the
