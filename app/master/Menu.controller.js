@@ -91,6 +91,10 @@ sap.ui.controller("app.master.Menu", {
 	onBills : function(oEvent) {
 		//FIXME - implement 
 		//alert('onBills...');
+		
+		//pedidos_maestro_com_co__NotasVentaService();
+		//pedidos_maestro_com_co__NotasVentaService_pedidos_maestro_com_co__NotasVentaServicePort ();
+		//pedidos_maestro_com_co__testService_op(this.serviceCallback, this.serviceCallback, "Frank");
 	},
 
 	onExit : function(oEvent) {
