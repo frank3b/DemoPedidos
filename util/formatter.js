@@ -23,6 +23,24 @@ util.formatter = {
 			return (value && util.formatter._statusStateMap[value]) ? util.formatter._statusStateMap[value] : "None";
 		},
 		
+		ProductsState :  function (value) {
+			if(value > 0){
+				return "Success";
+			} else {
+				return "Error";
+			}
+			
+		},
+		
+		ProductsStateText :  function (value) {
+			if(value > 0){
+				return "Disponible";
+			} else {
+				return "Agotado";
+			}
+			
+		},
+		
 		Quantity :  function (value) {
 			try {
 				return (value) ? parseFloat(value).toFixed(0) : value;

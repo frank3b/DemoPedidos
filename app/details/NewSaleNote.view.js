@@ -34,6 +34,9 @@ sap.ui.jsview("app.details.NewSaleNote", {
 			id : "productsHelpDialog",
 			title : "{i18n>PRODUCTS_LIST_TITLE}",
 			class : "sapUiPopupWithPadding",
+			noDataText  : "{i18n>NO_DATA}",
+			//growing : true, No funciona
+			growingThreshold : 5,
 			search : function(oEvent) {
 				oController.handleProductsValueHelpSearch(oEvent);
 			},
@@ -45,12 +48,30 @@ sap.ui.jsview("app.details.NewSaleNote", {
 			},
 		});
 		this.productsHelpDialog.setModel( oProductsModel );
-		var olistProductsTemplate = new sap.m.StandardListItem({
+		/*var olistProductsTemplate = new sap.m.StandardListItem({
 			title : "{Code} {ProductName}",
 			type : sap.m.ListType.Active,
 			description : "{Price} {CurrencyCode}"
-		});	
-		this.productsHelpDialog.bindAggregation("items", "/", olistProductsTemplate);
+		});
+		*/	
+		var items = new sap.m.ObjectListItem({
+			title : "{Code} {ProductName}",
+			number : {path : "Price", formatter : util.formatter.Number},
+			numberUnit : "{CurrencyCode}",
+			attributes : [ 
+			new sap.m.ObjectAttribute({
+				text : "Existencia. {Stock}"
+			})
+			],
+			firstStatus : new sap.m.ObjectStatus({
+				text : { path: 'Stock',
+					formatter: util.formatter.ProductsStateText },
+				state: { path: 'Stock',
+					formatter: util.formatter.ProductsState }
+			})
+		});
+		
+		this.productsHelpDialog.bindAggregation("items", "/", items);
 		
 
 		//Petitioner Search Help
@@ -184,6 +205,7 @@ sap.ui.jsview("app.details.NewSaleNote", {
 		//Products Table
 		this.oTableItems = new sap.m.Table("itemsDataTable", {
 			mode : "SingleSelectMaster",
+			noDataText  : "{i18n>NO_DATA}",
 			//includeItemInSelection : true,
 			/*delete : function(oEvent) {
 				oController.handleDeleteProduct(oEvent);

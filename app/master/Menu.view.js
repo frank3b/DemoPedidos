@@ -62,7 +62,10 @@ sap.ui.jsview("app.master.Menu", {
 
 		// Sales notes list
 		this.oList = new sap.m.List({
-			id : "list"
+			id : "list",
+			growing : true,
+			growingScrollToLoad : false,
+			growingThreshold : 5,
 		});
 		this.oList.setModel(oSalesNotesModel);
 

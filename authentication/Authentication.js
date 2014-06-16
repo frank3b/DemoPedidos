@@ -116,6 +116,8 @@ function loginKiveyUser(userName, password, oBindingContext){
         	sap.ui.getCore().getEventBus().publish("busyDialog", "close");
         	if(error.name == 'InvalidCredentials') {
         		sap.m.MessageBox.alert( oBundle.getText("LOGIN_ERROR") );
+        	} else {
+        		sap.m.MessageBox.alert( oBundle.getText("CONNECTION_ERROR") );
         	}
         	
         }	
