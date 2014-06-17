@@ -83,6 +83,14 @@ util.formatter = {
 				return value;
 			}
 			
-		}
+		},
 		
+		SaleNoteType : {
+			"Proforma" : oBundle.getText("SALENOTE_TYPE_PROFORMA"),
+			"Nota" : oBundle.getText("SALENOTE_TYPE_NOTA"),
+			"Pre" : oBundle.getText("SALENOTE_TYPE_PRE")
+		}
 };		
+
+
+

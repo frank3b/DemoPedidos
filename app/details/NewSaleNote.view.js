@@ -130,6 +130,27 @@ sap.ui.jsview("app.details.NewSaleNote", {
 			number : "0",
 			unit : "{/CurrencyCode}"
 		});
+		this.saleNoteTypeSelect = new sap.m.Select({
+			id : "saleNoteTypeSelect",
+			type : "Default",
+			autoAdjustWidth : true,
+			selectedKey : "{/SaleNoteType}",
+			items : [ 
+			    new sap.ui.core.Item({
+					key : "Proforma",
+					text : "{i18n>SALENOTE_TYPE_PROFORMA}"
+			    }), 
+			    new sap.ui.core.Item({ 
+				    key : "Nota", 
+				    text : "{i18n>SALENOTE_TYPE_NOTA}" 
+			    }), 
+				new sap.ui.core.Item({ 
+					key : "Pre", 
+					text: "{i18n>SALENOTE_TYPE_PRE}" 
+				})
+			]
+		});
+		
 		//sap.m.DisplayListItem({ label : oBundle.getText("SALESORDER_CREATEDAT"), value :{path : "CreatedAt", formatter : fnDateTimeFormatter}})
 		var oForm1 = new sap.ui.layout.form.Form("F1", {
 			//title : new sap.ui.core.Title({
@@ -142,7 +163,11 @@ sap.ui.jsview("app.details.NewSaleNote", {
 				formElements : [ 
 				new sap.ui.layout.form.FormElement({
 					label : ""
-				}),                
+				}),   
+				new sap.ui.layout.form.FormElement({
+					label : "{i18n>SALE_NOTE_TYPE_LABEL}",
+					fields : [ this.saleNoteTypeSelect ]
+				}),
 				new sap.ui.layout.form.FormElement({
 					label : "{i18n>SALENOTE_PETITIONER}",
 					fields : [ this.petitioner ]
