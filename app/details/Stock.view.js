@@ -38,12 +38,14 @@ sap.ui.jsview("app.details.Stock", {
 		var oCancelButton = new sap.m.Button({
 			text: "{i18n>BUTTON_CANCEL}",
 			type: sap.m.ButtonType.Reject,
-			press: function(){
-				oFilterResponsivePopover.close();
-			}
+			press: [ oController.onCancelFilterTap, oController ]
 		});
 		
-		var oFilterResponsivePopover = new sap.m.ResponsivePopover({
+		this.storeInput = new sap.m.Input( { value : "" } );
+		this.materialInput = new sap.m.Input( { value : "" } );
+		this.codeInput = new sap.m.Input( { value : "" } );
+		
+		this.oFilterResponsivePopover = new sap.m.ResponsivePopover({
 			placement: sap.m.PlacementType.Bottom,
 			title: "{i18n>STOCK_SEARCH_FILTERS_TITLE}",
 			showHeader: true,
@@ -67,15 +69,15 @@ sap.ui.jsview("app.details.Stock", {
 					items : [
 						new sap.m.InputListItem({
 							label : "{i18n>STOCK_SHOP_TITLE}",
-							content : new sap.m.Input( { value : "{/Tienda}" } )
+							content : this.storeInput
 						}),
 						new sap.m.InputListItem({
 							label : "{i18n>STOCK_MATERIAL_TITLE}",
-							content : new sap.m.Input( { value : "{/Material}" } )
+							content : this.materialInput
 						}),
 						new sap.m.InputListItem({
 							label : "{i18n>STOCK_CODE_TITLE}",
-							content : new sap.m.Input( { value : "{/Codigo}" } )
+							content : this.codeInput
 						})
 					],
 				})
@@ -95,8 +97,8 @@ sap.ui.jsview("app.details.Stock", {
 			title : "{Description}",
 			intro : "{Code}",
 			number : {path : "Stock", formatter : util.formatter.Number},
-			type : "Active",
-			numberUnit : "Cant.",
+			//type : "Active",
+			numberUnit : "Stock",
 			//press : [ oController.onListSelect, oController ],
 			attributes : [ 
 			new sap.m.ObjectAttribute({
@@ -128,17 +130,20 @@ sap.ui.jsview("app.details.Stock", {
 			enableFlexBox : true,
 			contentMiddle : [ this.searchFieldStock ]
 		});
+		
+		var pull = new sap.m.PullToRefresh({
+		    description : "",
+		    refresh : [oController, oController.onPull]
+		});	
 
 		return new sap.m.Page({
 			title : "{i18n>TITLE__STOCK}",
 			showNavButton : jQuery.device.is.phone,
 	    	navButtonTap : [ oController.onNavButtonTap, oController ],
-			content : [ searchBar,  this.oList],
+			content : [ pull, searchBar,  this.oList],
 			headerContent : [ new sap.m.Button({
 				icon : "sap-icon://filter",
-				press : function() {
-					oFilterResponsivePopover.openBy(this);
-				}
+				press: [ oController.onFilterSelected, oController ] 
 			}) ]
 		});
 	}

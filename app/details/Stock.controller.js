@@ -36,8 +36,6 @@ sap.ui.controller("app.details.Stock", {
 //	}
 	
 	onBeforeShow : function(oEvent) {
-		//var oModel = new sap.ui.model.json.JSONModel("model/mockSaleNote.json");
-		//this.getView().setModel(oModel);
 		this.loadContent();
 	},
 	
@@ -46,7 +44,33 @@ sap.ui.controller("app.details.Stock", {
 	},
 	
 	onFilterSearchTap : function(evt) {
+		var oView = this.getView();
 		
+		oView.oFilterResponsivePopover.close();
+		
+		var store = oView.storeInput.getValue();
+		var material = oView.materialInput.getValue();
+		var code = oView.codeInput.getValue();
+		
+		var filters = [];
+		// add filter for search
+		if (material && material.length > 0) {
+			var filter = new sap.ui.model.Filter("Description", sap.ui.model.FilterOperator.Contains, material);
+			filters.push(filter);
+		}
+		if (store && store.length > 0) {
+			var filter = new sap.ui.model.Filter("Store", sap.ui.model.FilterOperator.Contains, store);
+			filters.push(filter);
+		}
+		if (code && code.length > 0) {
+			var filter = new sap.ui.model.Filter("Code", sap.ui.model.FilterOperator.Contains, code);
+			filters.push(filter);
+		}
+		
+		// update list binding
+		var list = oView.oList;
+		var binding = list.getBinding("items");
+		binding.filter(filters);		
 	},
 	
 	loadContent: function(){
@@ -74,13 +98,25 @@ sap.ui.controller("app.details.Stock", {
 		this._updateList();
     },
     
+    onFilterSelected : function(oEvent) {
+    	var oView = this.getView();
+    	
+    	oView.oFilterResponsivePopover.openBy(this);
+    },
+    
+    onCancelFilterTap : function(oEvent) {
+    	var oView = this.getView();
+    	
+    	oView.oFilterResponsivePopover.close();
+    },
+    
     _updateList : function () {
 		
 		var filters = [];
 		var oView = this.getView();
 		
 		// add filter for search
-		var searchString = oView.searchField.getValue();
+		var searchString = oView.searchFieldStock.getValue();
 		if (searchString && searchString.length > 0) {
 			var filter = new sap.ui.model.Filter("Description", sap.ui.model.FilterOperator.Contains, searchString);
 			filters.push(filter);
@@ -90,7 +126,11 @@ sap.ui.controller("app.details.Stock", {
 		var list = oView.oList;
 		var binding = list.getBinding("items");
 		binding.filter(filters);		
-		
+	},
+	
+	onPull : function(oEvent, oController){
+		oController.loadContent();
+		this.hide();
 	},
 	
 });
