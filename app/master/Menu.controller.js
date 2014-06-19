@@ -170,6 +170,7 @@ sap.ui.controller("app.master.Menu", {
 	
 	loadContent: function(){
 		var oView = this.getView();
+		sap.ui.getCore().getEventBus().publish("busyDialog", "open");
 		
 		var promiseSalesNotes = Kinvey.DataStore.find('SalesNotes', null, {
 			success : function(response) {
@@ -188,7 +189,8 @@ sap.ui.controller("app.master.Menu", {
 		
 		promiseSalesNotes.then( function() {
 			oView.oList.setModel(oSalesNotesModel);
-			oView.oList.bindItems("/", this.getView().items);
+			oView.oList.bindItems("/", oView.items);
+			sap.ui.getCore().getEventBus().publish("busyDialog", "close");
 		});
 		
     	
